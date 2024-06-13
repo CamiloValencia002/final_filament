@@ -17,7 +17,7 @@ class Driver extends Model
     public function rating(){
         return $this->belongsTo(Rating::class);
     }
-    public function user(){
+    public function user_driver(){
         return $this->belongsToMany(User::class);
     }
     public function route(){

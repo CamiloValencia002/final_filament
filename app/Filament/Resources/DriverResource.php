@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Select;
+use App\Models\User;
 
 class DriverResource extends Resource
 {
@@ -25,7 +27,8 @@ class DriverResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('id_admin')
                     ->required()
-                    ->numeric(),
+                    ->disabled()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),

@@ -42,8 +42,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function driver() {
-        return $this->belongsTo(Driver::class);
+    public function drivers() {
+        return $this->hasMany(Driver::class, 'id_admin');
     }
     public function customer() {
         return $this->belongsTo(Customer::class);

@@ -15,7 +15,7 @@ class Customer extends Model
     public function package(){
         return $this->belongsTo(Package::class);
     }
-    public function user(){
+    public function user_customer(){
         return $this->belongsToMany(User::class);
     }
     public function rating(){
