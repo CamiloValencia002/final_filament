@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\DeliveryResource\Pages;
+namespace App\Filament\Resources\RouteResource\Pages;
 
-use App\Filament\Resources\DeliveryResource;
+use App\Filament\Resources\RouteResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditDelivery extends EditRecord
+class EditRoute extends EditRecord
 {
-    protected static string $resource = DeliveryResource::class;
+    protected static string $resource = RouteResource::class;
 
     protected function getHeaderActions(): array
     {

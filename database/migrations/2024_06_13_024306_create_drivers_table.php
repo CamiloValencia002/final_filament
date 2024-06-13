@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_admin');
             $table->string('name');
             $table->string('last_name');
             $table->string('email')->unique();
@@ -23,6 +24,13 @@ return new class extends Migration
             $table->string('photo_licence');
             $table->float('ratings');
             $table->timestamps();
+
+        
+            
+            
+            $table->foreign('id_admin')->references('id')->on('users')->onDelete('cascade');
+     
+      
 
         });
     }

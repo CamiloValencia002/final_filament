@@ -11,8 +11,8 @@ class Rating extends Model
     protected $guarded = [
      
     ];
-    public function delivery(){
-        return $this->belongsTo(Delivery::class);
+    public function route(){
+        return $this->belongsTo(Route::class);
     }
 
     public function driver(){

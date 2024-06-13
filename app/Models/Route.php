@@ -5,17 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Request extends Model
+class Route extends Model
 {
     use HasFactory;
     protected $guarded = [
      
     ];
-    public function package(){
+    public function rating() {
+        return $this->belongsTo(Rating::class);
+        
+    }
+    public function package() {
         return $this->belongsTo(Package::class);
     }
-
-    public function delivery(){
-        return $this->belongsTo(Delivery::class);
+    public function driver() {
+        return $this->belongsToMany(Driver::class);
     }
+ 
+ 
 }

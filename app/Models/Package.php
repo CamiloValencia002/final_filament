@@ -14,7 +14,7 @@ class Package extends Model
     public function customer(){
         return $this->belongsToMany(Customer::class);
     }
-    public function request(){
-        return $this->belongsTo(Request::class);
+    public function route(){
+        return $this->belongsTo(Route::class);
     }
 }

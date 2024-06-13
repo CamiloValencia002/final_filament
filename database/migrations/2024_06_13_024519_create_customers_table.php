@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('id_admin');
+  
             $table->string('name');
             $table->string('last_name');
             $table->string('email')->unique();
@@ -22,6 +24,10 @@ return new class extends Migration
             $table->boolean('document_verify');
             $table->float('ratings');
             $table->timestamps();
+
+
+            $table->foreign('id_admin')->references('id')->on('users')->onDelete('cascade');
+       
         });
     }
 

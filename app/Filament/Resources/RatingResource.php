@@ -29,6 +29,9 @@ class RatingResource extends Resource
                 Forms\Components\TextInput::make('id_customer')
                     ->required()
                     ->numeric(),
+                Forms\Components\TextInput::make('id_route')
+                    ->required()
+                    ->numeric(),
                 Forms\Components\TextInput::make('ratings')
                     ->required()
                     ->numeric(),
@@ -46,6 +49,9 @@ class RatingResource extends Resource
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('id_customer')
+                    ->numeric()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('id_route')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('ratings')

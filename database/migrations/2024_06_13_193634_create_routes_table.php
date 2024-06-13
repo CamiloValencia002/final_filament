@@ -11,19 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('deliveries', function (Blueprint $table) {
+        Schema::create('routes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_request');
             $table->unsignedBigInteger('id_driver');
-            $table->unsignedBigInteger('id_rating');
-            $table->string('city');
-            $table->string('delivery_state');
-            $table->string('comment');
+            $table->unsignedBigInteger('id_package');
+
+            $table->string('location');
+            $table->string('comment')->nullable();
+            $table->string('state')->nullable();
             $table->timestamps();
 
-            $table->foreign('id_request')->references('id')->on('requests')->onDelete('cascade');
             $table->foreign('id_driver')->references('id')->on('drivers')->onDelete('cascade');
-            $table->foreign('id_rating')->references('id')->on('ratings')->onDelete('cascade');
+            $table->foreign('id_package')->references('id')->on('packages')->onDelete('cascade');
+
+           
         });
     }
 
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('deliveries');
+        Schema::dropIfExists('routes');
     }
 };
