@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-06-2024 a las 23:14:07
+-- Tiempo de generación: 14-06-2024 a las 05:54:56
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -39,7 +39,8 @@ CREATE TABLE `customers` (
   `document_verify` tinyint(1) NOT NULL,
   `ratings` double(8,2) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -56,6 +57,7 @@ CREATE TABLE `drivers` (
   `email` varchar(255) NOT NULL,
   `telephone` varchar(255) NOT NULL,
   `adress` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `document` varchar(255) NOT NULL,
   `document_verify` tinyint(1) NOT NULL,
   `photo_licence` varchar(255) NOT NULL,
@@ -200,7 +202,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', 'admin@gmail.com', NULL, '$2y$10$.ElZ44bn9SCVwaGHrfqWc.uGeBDZWwWhSqS8S1bv7X4B5dBk0fBjW', NULL, '2024-06-14 01:51:42', '2024-06-14 01:51:42');
+(1, 'admin', 'admin@gmail.com', NULL, '$2y$10$.ElZ44bn9SCVwaGHrfqWc.uGeBDZWwWhSqS8S1bv7X4B5dBk0fBjW', NULL, '2024-06-14 01:51:42', '2024-06-14 01:51:42'),
+(2, 'mod', 'mod@gmail.com', NULL, '123', NULL, '2024-06-14 08:05:56', '2024-06-14 08:05:56'),
+(3, 'mod2', 'mod2@gmail.com', NULL, '$2y$10$4BxZC5VL4CUNY9KNn2gQferJeImLbHYNzdlvxize.LfJeTGMh9paC', NULL, '2024-06-14 08:08:55', '2024-06-14 08:12:48'),
+(4, 'mod3', 'mod3@gmail.com', NULL, '$2y$10$BU9H6TUIpyycWu05TY9Rpuf1oW.vyAd6c/vk.nhqIPvmcB9/dJ6rC', NULL, '2024-06-14 08:39:43', '2024-06-14 08:39:43');
 
 -- --------------------------------------------------------
 
@@ -362,7 +367,7 @@ ALTER TABLE `routes`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `vehicles`

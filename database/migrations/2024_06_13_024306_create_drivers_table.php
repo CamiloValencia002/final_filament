@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('telephone');
             $table->string('adress');
+            $table->string('password');
             $table->string('document')->unique();
             $table->boolean('document_verify');
             $table->string('photo_licence');

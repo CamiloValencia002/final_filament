@@ -36,6 +36,12 @@ class CustomerResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
+
+                Forms\Components\TextInput::make('password')
+                    ->password()
+                    ->required()
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn ($state) => bcrypt($state)),
                 Forms\Components\TextInput::make('telephone')
                     ->tel()
                     ->required()

@@ -27,8 +27,11 @@ class DriverResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('id_admin')
                     ->required()
-                    ->disabled()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->readOnly()
+                    ->default(1),
+
+
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -46,17 +49,28 @@ class DriverResource extends Resource
                 Forms\Components\TextInput::make('adress')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('password')
+                    ->password() 
+                    ->required()
+                    ->maxLength(255)
+                    ->dehydrateStateUsing(fn ($state) => bcrypt($state)),
+
                 Forms\Components\TextInput::make('document')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Toggle::make('document_verify')
                     ->required(),
                 Forms\Components\TextInput::make('photo_licence')
-                    ->required()
-                    ->maxLength(255),
+                    ->required(),
+
                 Forms\Components\TextInput::make('ratings')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->readOnly()
+                    ->default(1),
+               
+                   
+
             ]);
     }
 

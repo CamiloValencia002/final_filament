@@ -11,6 +11,14 @@ class Driver extends Model
     protected $guarded = [
      
     ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+
+    
     public function vehicule() {
         return $this->belongsTo(Vehicle::class);
     }
