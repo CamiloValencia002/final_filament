@@ -21,6 +21,7 @@ class DriverResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-user-group';
     protected static ?string $label = 'Conductores';
+    protected static ?string $navigationGroup = 'Conductores';
 
     public static function form(Form $form): Form
     {

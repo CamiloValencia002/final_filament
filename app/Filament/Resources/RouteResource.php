@@ -18,8 +18,9 @@ class RouteResource extends Resource
 {
     protected static ?string $model = Route::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-map';
+    protected static ?string $navigationIcon = 'heroicon-s-map';
     protected static ?string $label = 'Rutas';
+    protected static ?string $navigationGroup = 'Viajes';
 
     public static function form(Form $form): Form
     {
@@ -37,6 +38,7 @@ class RouteResource extends Resource
                 ->required(),
                 Forms\Components\TextInput::make('location')
                     ->required()
+                    ->placeholder('Especifica la ruta realizada')
                     ->label('Ubicacion')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('comment')

@@ -18,8 +18,9 @@ class RatingResource extends Resource
 {
     protected static ?string $model = Rating::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-star';
+    protected static ?string $navigationIcon = 'heroicon-s-star';
     protected static ?string $label = 'Calificaciones';
+    protected static ?string $navigationGroup = 'Viajes';
 
     public static function form(Form $form): Form
     {

@@ -19,6 +19,7 @@ class PackageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-c-archive-box';
     protected static ?string $label = 'Paquetes';
+    protected static ?string $navigationGroup = 'Clientes';
 
     public static function form(Form $form): Form
     {
