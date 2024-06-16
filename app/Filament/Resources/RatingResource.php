@@ -17,7 +17,8 @@ class RatingResource extends Resource
 {
     protected static ?string $model = Rating::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-star';
+    protected static ?string $label = 'Calificaciones';
 
     public static function form(Form $form): Form
     {
@@ -25,18 +26,23 @@ class RatingResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('id_driver')
                     ->required()
+                    ->label('Conductor')
                     ->numeric(),
                 Forms\Components\TextInput::make('id_customer')
                     ->required()
+                    ->label('Cliente')
                     ->numeric(),
                 Forms\Components\TextInput::make('id_route')
                     ->required()
+                    ->label('Ruta')
                     ->numeric(),
                 Forms\Components\TextInput::make('ratings')
                     ->required()
+                    ->label('Calificaciones')
                     ->numeric(),
                 Forms\Components\TextInput::make('comment')
                     ->required()
+                    ->label('Comentario')
                     ->maxLength(255),
             ]);
     }
@@ -47,18 +53,23 @@ class RatingResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id_driver')
                     ->numeric()
+                    ->label('Conductor')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('id_customer')
                     ->numeric()
+                    ->label('Cliente')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('id_route')
                     ->numeric()
+                    ->label('Ruta')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('ratings')
                     ->numeric()
+                    ->label('Calificacion')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('comment')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Comentario'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -72,7 +83,8 @@ class RatingResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Editar'),
+                Tables\Actions\DeleteAction::make()->label('Eliminar'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

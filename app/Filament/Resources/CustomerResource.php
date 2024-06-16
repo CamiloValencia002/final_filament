@@ -17,7 +17,8 @@ class CustomerResource extends Resource
 {
     protected static ?string $model = Customer::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-c-user-group';
+    protected static ?string $label = 'Clientes';
 
     public static function form(Form $form): Form
     {
@@ -25,37 +26,47 @@ class CustomerResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('id_admin')
                     ->required()
+                    ->label('Administrador')
                     ->numeric(),
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->label('Nombre')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('last_name')
                     ->required()
+                    ->label('Apellido')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
+                    ->label('Correo')
                     ->required()
                     ->maxLength(255),
 
                 Forms\Components\TextInput::make('password')
                     ->password()
+                    ->label('Contraseña')
                     ->required()
                     ->maxLength(255)
                     ->dehydrateStateUsing(fn ($state) => bcrypt($state)),
                 Forms\Components\TextInput::make('telephone')
                     ->tel()
+                    ->label('Telefono')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('adress')
                     ->required()
+                    ->label('Direccion')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('document')
                     ->required()
+                    ->label('Documento')
                     ->maxLength(255),
                 Forms\Components\Toggle::make('document_verify')
-                    ->required(),
+                    ->required()
+                    ->label('Verificacion Documento'),
                 Forms\Components\TextInput::make('ratings')
                     ->required()
+                    ->label('Calificacion')
                     ->numeric(),
             ]);
     }
@@ -66,23 +77,32 @@ class CustomerResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id_admin')
                     ->numeric()
+                    ->label('Administrador')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Nombre'),
                 Tables\Columns\TextColumn::make('last_name')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Apellido'),
                 Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Correo'),
                 Tables\Columns\TextColumn::make('telephone')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Telefono'),
                 Tables\Columns\TextColumn::make('adress')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Direccion'),
                 Tables\Columns\TextColumn::make('document')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Documento'),
                 Tables\Columns\IconColumn::make('document_verify')
-                    ->boolean(),
+                    ->boolean()
+                    ->label('Verificacion Documento'),
                 Tables\Columns\TextColumn::make('ratings')
                     ->numeric()
+                    ->label('Calificacion')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -97,7 +117,8 @@ class CustomerResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Editar'),
+                Tables\Actions\DeleteAction::make()->label('Eliminar'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

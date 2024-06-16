@@ -17,7 +17,8 @@ class RouteResource extends Resource
 {
     protected static ?string $model = Route::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-map';
+    protected static ?string $label = 'Rutas';
 
     public static function form(Form $form): Form
     {
@@ -25,17 +26,22 @@ class RouteResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('id_driver')
                     ->required()
+                    ->label('Conductor')
                     ->numeric(),
                 Forms\Components\TextInput::make('id_package')
                     ->required()
+                    ->label('Paquete')
                     ->numeric(),
                 Forms\Components\TextInput::make('location')
                     ->required()
+                    ->label('Ubicacion')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('comment')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label('Comentario'),
                 Forms\Components\TextInput::make('state')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label('Estado'),
             ]);
     }
 
@@ -68,7 +74,8 @@ class RouteResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Editar'),
+                Tables\Actions\DeleteAction::make()->label('Eliminar'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

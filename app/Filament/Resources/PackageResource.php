@@ -17,33 +17,45 @@ class PackageResource extends Resource
 {
     protected static ?string $model = Package::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-c-archive-box';
+    protected static ?string $label = 'Paquetes';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id_customer')
-                    ->required()
-                    ->numeric(),
+               
+                    Forms\Components\Select::make('id_customer')
+                    ->relationship(name: 'customers', titleAttribute: 'document',) // el title sirve para mostrar el campo de la bd
+                    ->label('Cliente')
+                    ->placeholder('Seleccione la cedula del cliente')
+                    ->required(),
                 Forms\Components\TextInput::make('carge_type')
+                    ->label('Tipo de Carga')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('size')
+                    ->label('Tamaño')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('weight')
+                    ->label('Peso')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('point_initial')
+                    ->label('Punto Inicial')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('point_finally')
+                    ->label('Punto Final')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
+                    ->label('Descripción')
                     ->maxLength(255),
-                Forms\Components\Toggle::make('price')
+                Forms\Components\TextInput::make('price')
+                    ->label('Precio')
                     ->required(),
                 Forms\Components\TextInput::make('comment')
+                    ->label('Comentario')
                     ->maxLength(255),
             ]);
     }
@@ -52,30 +64,40 @@ class PackageResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id_customer')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('customer.name')
+                ->label('Nombre del Cliente')
+                ->searchable(),
                 Tables\Columns\TextColumn::make('carge_type')
+                    ->label('Tipo de Carga')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('size')
+                    ->label('Tamaño')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('weight')
+                    ->label('Peso')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('point_initial')
+                    ->label('Punto Inicial')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('point_finally')
+                    ->label('Punto Final')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
+                    ->label('Descripción')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('price')
-                    ->boolean(),
+                Tables\Columns\TextColumn::make('price')
+                    ->label('Precio')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('comment')
+                    ->label('Comentario')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha de Creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Fecha de Actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -84,7 +106,9 @@ class PackageResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Editar'),
+                Tables\Actions\DeleteAction::make()->label('Eliminar'),
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

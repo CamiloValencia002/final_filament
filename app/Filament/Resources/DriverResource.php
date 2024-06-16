@@ -19,55 +19,64 @@ class DriverResource extends Resource
 {
     protected static ?string $model = Driver::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-user-group';
+    protected static ?string $label = 'Conductores';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id_admin')
-                    ->required()
-                    ->maxLength(255)
-                    ->readOnly()
-                    ->default(1),
-
+                Forms\Components\Select::make('id_admin')
+                    ->relationship(name: 'user', titleAttribute: 'name',) // el title sirve para mostrar el campo de la bd
+                    ->label('Seleccione un administrador')
+                    ->placeholder('admin')
+                    ->required(),
 
                 Forms\Components\TextInput::make('name')
                     ->required()
+                    ->label('Nombre')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('last_name')
                     ->required()
+                    ->label('Apellido')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
+                    ->label('Correo')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('telephone')
                     ->tel()
                     ->required()
+                    ->label('Telefono')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('adress')
                     ->required()
+                    ->label('Direccion')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
                     ->password() 
+                    ->label('Contraseña')
                     ->required()
                     ->maxLength(255)
                     ->dehydrateStateUsing(fn ($state) => bcrypt($state)),
-
                 Forms\Components\TextInput::make('document')
                     ->required()
+                    ->label('Documento')
                     ->maxLength(255),
                 Forms\Components\Toggle::make('document_verify')
+                    ->label('Verificacion del Documento')
                     ->required(),
                 Forms\Components\TextInput::make('photo_licence')
+                    ->label('Foto Licencia')
                     ->required(),
 
                 Forms\Components\TextInput::make('ratings')
                     ->required()
+                    ->label('Calificacion')
                     ->numeric()
                     ->readOnly()
-                    ->default(1),
+                    ->default(0),
                
                    
 
@@ -80,25 +89,35 @@ class DriverResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id_admin')
                     ->numeric()
+                    ->label('Administrador')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nombre')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('last_name')
+                    ->label('Apellido')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->label('Correo') 
                     ->searchable(),
                 Tables\Columns\TextColumn::make('telephone')
+                    ->label('Telefono')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('adress')
+                    ->label('Direccion')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('document')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Documento'),
                 Tables\Columns\IconColumn::make('document_verify')
-                    ->boolean(),
+                    ->boolean()
+                    ->label('Verificacion Documento'),
                 Tables\Columns\TextColumn::make('photo_licence')
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Foto Licencia'),
                 Tables\Columns\TextColumn::make('ratings')
                     ->numeric()
+                    ->label('Calificacion')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -113,8 +132,8 @@ class DriverResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
+                Tables\Actions\EditAction::make()->label('Editar'),
+                Tables\Actions\DeleteAction::make()->label('Eliminar'),            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),

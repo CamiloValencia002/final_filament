@@ -10,11 +10,13 @@ class Package extends Model
     use HasFactory;
     protected $guarded = [
      
-    ];
-    public function customer(){
-        return $this->belongsToMany(Customer::class);
+    ];  
+    public function customers(){
+        return $this->belongsTo(Customer::class);
     }
+    
     public function route(){
         return $this->belongsTo(Route::class);
     }
+
 }

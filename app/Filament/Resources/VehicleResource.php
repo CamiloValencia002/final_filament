@@ -17,28 +17,37 @@ class VehicleResource extends Resource
 {
     protected static ?string $model = Vehicle::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-truck';
+    protected static ?string $label = 'Vehiculos';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id_driver')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\Select::make('id_driver')
+                    ->relationship(name: 'driver', titleAttribute: 'document',) // el title sirve para mostrar el campo de la bd
+                    ->label('Conductor')
+                    ->placeholder('Seleccione la cedúla del conductor')
+                    ->required(),
                 Forms\Components\TextInput::make('vehicle_photo')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label('Foto Vehiculo'),
                 Forms\Components\TextInput::make('capacity')
                     ->required()
+                    ->label('Capacidad')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('dimension')
                     ->required()
+                    ->label('Dimensiones')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('type')
                     ->required()
+                    ->label('Tipo')
                     ->maxLength(255),
-                Forms\Components\Toggle::make('photo_soat'),
-                Forms\Components\Toggle::make('photo_tecnomecanic'),
+                Forms\Components\Toggle::make('photo_soat')
+                    ->label('SOAT'),
+                Forms\Components\Toggle::make('photo_tecnomecanic')
+                    ->label('TECNICOMECANICA'),
             ]);
     }
 
@@ -46,26 +55,36 @@ class VehicleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id_driver')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('driver.document')->label('Conductor')
+                ->searchable(),
                 Tables\Columns\TextColumn::make('vehicle_photo')
+                    ->label('Foto Vehiculo')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('capacity')
+                    ->label('Capacidad')
+
                     ->searchable(),
                 Tables\Columns\TextColumn::make('dimension')
+                    ->label('Dimensiones')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
+                    ->label('Tipo')
+
                     ->searchable(),
                 Tables\Columns\IconColumn::make('photo_soat')
+                    ->label('SOAT')
                     ->boolean(),
                 Tables\Columns\IconColumn::make('photo_tecnomecanic')
+                    ->label('TECNICOMECANICA')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Creado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Actualizado')
+
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -74,7 +93,8 @@ class VehicleResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()->label('Editar'),
+                Tables\Actions\DeleteAction::make()->label('Eliminar'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

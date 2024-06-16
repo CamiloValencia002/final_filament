@@ -17,11 +17,9 @@ class Customer extends Model
         'remember_token',
     ];
 
-    public function package(){
-        return $this->belongsTo(Package::class);
-    }
-    public function user_customer(){
-        return $this->belongsToMany(User::class);
+
+    public function packages(){
+        return $this->belongsToMany(Package::class);
     }
     public function rating(){
         return $this->belongsTo(Rating::class);
