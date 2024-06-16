@@ -11,6 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Select;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RatingResource extends Resource
@@ -24,22 +25,32 @@ class RatingResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id_driver')
-                    ->required()
+                Forms\Components\Select::make('id_driver')
+                    ->relationship(name: 'driver', titleAttribute: 'document',) // el title sirve para mostrar el campo de la bd
                     ->label('Conductor')
-                    ->numeric(),
-                Forms\Components\TextInput::make('id_customer')
-                    ->required()
+                    ->placeholder('Seleccione la cedula del conductor')
+                    ->required(),
+                Forms\Components\Select::make('id_customer')
+                    ->relationship(name: 'customers', titleAttribute: 'document',) // el title sirve para mostrar el campo de la bd
                     ->label('Cliente')
-                    ->numeric(),
-                Forms\Components\TextInput::make('id_route')
-                    ->required()
+                    ->placeholder('Seleccione la cedula del cliente')
+                    ->required(),
+                    Forms\Components\Select::make('id_route')
+                    ->relationship(name: 'route', titleAttribute: 'location',) // el title sirve para mostrar el campo de la bd
                     ->label('Ruta')
-                    ->numeric(),
-                Forms\Components\TextInput::make('ratings')
+                    ->placeholder('Seleccione la ruta realizada')
+                    ->required(),
+                    Select::make('ratings')
                     ->required()
+                    ->placeholder('Califica Tu Experiencia')
                     ->label('Calificaciones')
-                    ->numeric(),
+                    ->options([
+                        1 => '1',
+                        2 => '2',
+                        3 => '3',
+                        4 => '4',
+                        5 => '5',
+                    ]),
                 Forms\Components\TextInput::make('comment')
                     ->required()
                     ->label('Comentario')
@@ -51,18 +62,15 @@ class RatingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id_driver')
-                    ->numeric()
-                    ->label('Conductor')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('id_customer')
-                    ->numeric()
-                    ->label('Cliente')
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('id_route')
-                    ->numeric()
-                    ->label('Ruta')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('driver.document')
+                ->label('Cedula del Conductor')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('customers.document')
+                ->label('Cedula del Cliente')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('route.location')
+                ->label('Ruta')
+                ->searchable(),
                 Tables\Columns\TextColumn::make('ratings')
                     ->numeric()
                     ->label('Calificacion')

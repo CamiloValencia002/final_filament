@@ -43,9 +43,9 @@ class User extends Authenticatable
     ];
 
     public function drivers() { //Belongstomany
-        return $this->belongsToMany(Driver::class);
+        return $this->belongsToMany(Driver::class , 'id_driver');
     }
     public function customer() {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'id_customer');
     }   
 }

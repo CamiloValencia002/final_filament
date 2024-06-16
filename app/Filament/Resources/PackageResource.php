@@ -39,6 +39,7 @@ class PackageResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('weight')
                     ->label('Peso')
+                    ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('point_initial')
                     ->label('Punto Inicial')
@@ -64,8 +65,8 @@ class PackageResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('customer.name')
-                ->label('Nombre del Cliente')
+                Tables\Columns\TextColumn::make('customers.document')
+                ->label('Cedula del Cliente')
                 ->searchable(),
                 Tables\Columns\TextColumn::make('carge_type')
                     ->label('Tipo de Carga')

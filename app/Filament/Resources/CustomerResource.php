@@ -24,10 +24,11 @@ class CustomerResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id_admin')
-                    ->required()
-                    ->label('Administrador')
-                    ->numeric(),
+                Forms\Components\Select::make('id_admin')
+                    ->relationship(name: 'user', titleAttribute: 'name',) // el title sirve para mostrar el campo de la bd
+                    ->label('Administrado')
+                    ->placeholder('Seleccione un administrador')
+                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->label('Nombre')
@@ -64,10 +65,12 @@ class CustomerResource extends Resource
                 Forms\Components\Toggle::make('document_verify')
                     ->required()
                     ->label('Verificacion Documento'),
-                Forms\Components\TextInput::make('ratings')
+                    Forms\Components\TextInput::make('ratings')
                     ->required()
                     ->label('Calificacion')
-                    ->numeric(),
+                    ->numeric()
+                    ->readOnly()
+                    ->default(0),
             ]);
     }
 
@@ -75,10 +78,9 @@ class CustomerResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id_admin')
-                    ->numeric()
-                    ->label('Administrador')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
+                ->label('Administrador')
+                ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->label('Nombre'),

@@ -12,14 +12,14 @@ class Route extends Model
      
     ];
     public function rating() {
-        return $this->belongsTo(Rating::class);
+        return $this->belongsTo(Rating::class, 'id_route');
         
     }
     public function package() {
-        return $this->belongsTo(Package::class);
+        return $this->belongsTo(Package::class, 'id_package');
     }
     public function driver() {
-        return $this->belongsToMany(Driver::class);
+        return $this->belongsTo(Driver::class, 'id_driver');
     }
  
  

@@ -12,11 +12,11 @@ class Package extends Model
      
     ];  
     public function customers(){
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'id_customer');
     }
     
     public function route(){
-        return $this->belongsTo(Route::class);
+        return $this->belongsToMany(Route::class);
     }
 
 }

@@ -17,18 +17,19 @@ class Driver extends Model
         'remember_token',
     ];
 
-
+ 
+    
     
     public function vehicule() {
-        return $this->belongsTo(Vehicle::class);
+        return $this->belongsTo(Vehicle::class, 'id_vehicle');
     }
     public function rating(){
-        return $this->belongsTo(Rating::class);
+        return $this->belongsToMany(Rating::class);
     }
     public function user(){ //LO COLOQUE COMO "driver" y le quite el many
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'id_admin');
     }
     public function route(){
-        return $this->belongsTo(Route::class);
+        return $this->belongsToMany(Route::class);
     }
 }

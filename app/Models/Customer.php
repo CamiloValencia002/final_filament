@@ -22,7 +22,10 @@ class Customer extends Model
         return $this->belongsToMany(Package::class);
     }
     public function rating(){
-        return $this->belongsTo(Rating::class);
+        return $this->belongsToMany(Rating::class);
     }
+    public function user() {
+        return $this->belongsTo(User::class, 'id_admin');
+    }  
     
 }

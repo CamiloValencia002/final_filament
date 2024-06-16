@@ -28,8 +28,8 @@ class DriverResource extends Resource
             ->schema([
                 Forms\Components\Select::make('id_admin')
                     ->relationship(name: 'user', titleAttribute: 'name',) // el title sirve para mostrar el campo de la bd
-                    ->label('Seleccione un administrador')
-                    ->placeholder('admin')
+                    ->label('Administrado')
+                    ->placeholder('Seleccione un administrador')
                     ->required(),
 
                 Forms\Components\TextInput::make('name')
@@ -87,10 +87,9 @@ class DriverResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id_admin')
-                    ->numeric()
-                    ->label('Administrador')
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
+                ->label('Administrador')
+                ->searchable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre')
                     ->searchable(),

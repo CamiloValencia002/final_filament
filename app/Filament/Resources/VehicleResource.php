@@ -25,7 +25,7 @@ class VehicleResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('id_driver')
-                    ->relationship(name: 'driver', titleAttribute: 'document',) // el title sirve para mostrar el campo de la bd
+                    ->relationship(name: 'driver', titleAttribute: 'document') // el title sirve para mostrar el campo de la bd
                     ->label('Conductor')
                     ->placeholder('Seleccione la cedúla del conductor')
                     ->required(),
@@ -45,9 +45,11 @@ class VehicleResource extends Resource
                     ->label('Tipo')
                     ->maxLength(255),
                 Forms\Components\Toggle::make('photo_soat')
-                    ->label('SOAT'),
+                    ->label('SOAT')
+                    ->required(),
                 Forms\Components\Toggle::make('photo_tecnomecanic')
-                    ->label('TECNICOMECANICA'),
+                    ->label('TECNICOMECANICA')
+                    ->required(),
             ]);
     }
 

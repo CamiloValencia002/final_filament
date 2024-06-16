@@ -8,6 +8,7 @@ use App\Models\Route;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Forms\Components\Select;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -24,14 +25,16 @@ class RouteResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('id_driver')
-                    ->required()
-                    ->label('Conductor')
-                    ->numeric(),
-                Forms\Components\TextInput::make('id_package')
-                    ->required()
-                    ->label('Paquete')
-                    ->numeric(),
+                Forms\Components\Select::make('id_driver')
+                ->relationship(name: 'driver', titleAttribute: 'document',) // el title sirve para mostrar el campo de la bd
+                ->label('Conductor')
+                ->placeholder('Seleccione la cedula del conductor')
+                ->required(),
+                Forms\Components\Select::make('id_package')
+                ->relationship(name: 'package', titleAttribute: 'carge_type',) // el title sirve para mostrar el campo de la bd
+                ->label('Paquete')
+                ->placeholder('Seleccione la carga del paquete')
+                ->required(),
                 Forms\Components\TextInput::make('location')
                     ->required()
                     ->label('Ubicacion')
@@ -39,9 +42,17 @@ class RouteResource extends Resource
                 Forms\Components\TextInput::make('comment')
                     ->maxLength(255)
                     ->label('Comentario'),
-                Forms\Components\TextInput::make('state')
-                    ->maxLength(255)
-                    ->label('Estado'),
+                    Select::make('state')
+                    ->required()
+                    ->placeholder('Estado')
+                    ->label('Estado')
+                    ->options([
+                        'BUSCANDO' => 'BUSCANDO',
+                        'ACEPTADO' => 'ACEPTADO',
+                        'EN PROCESO' => 'EN PROCESO',
+                        'COMPLETADO' => 'COMPLETADO',
+                        'CANCELADO' => 'CANCELADO',
+                    ]),
             ]);
     }
 
@@ -49,12 +60,12 @@ class RouteResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id_driver')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('id_package')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('driver.document')
+                ->label('Cedula del Conductor')
+                ->searchable(),
+                Tables\Columns\TextColumn::make('package.carge_type')
+                ->label('Carga del Paquete')
+                ->searchable(),
                 Tables\Columns\TextColumn::make('location')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('comment')
