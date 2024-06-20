@@ -143,16 +143,38 @@
         font-size: 20px;
         font-weight: bold;
     }
-
+    .container{
+      background-color: #000000c0;
+      border-radius: 5px;
+      width: 90%; /* Ajuste de ancho para pantallas pequeñas */
+      margin: 5%;
+      max-width: 400px; /* Ancho máximo */
+      max-height: 100%;
+      padding: 2rem; /* Añadir padding para espaciar contenido */
+    }
+    .button-sign{
+      background-color: #255B3F;
+    }
+    .div-img{
+      height: 100px;
+    }
+    .img-user{
+      height: 140px;
+    }
   </style>
 </head>
 <body>
   <div id="map"></div>
-  <header>
+  <header class="lg:fixed lg:w-full">
     <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
       <div class="flex lg:flex-1 header-logo">
-          <img class="img_header" type="image/png" src="{{ asset('img/Logo_final_filament.png') }}" alt="Logo">
-          <span class="agro">Agro</span><span class="drive">Drive</span>
+        <img class="img_header" type="image/png" src="{{ asset('img/Logo_final_filament.png') }}" alt="Logo">
+        <span class="agro">Agro</span><span class="drive">Drive</span>
+      </div>
+      <div class="lg:hidden flex items-center justify-end">
+        <button id="menu-toggle" class="focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
         <a href="#" class="a_header product text-sm font-semibold leading-6">Inicio</a>
@@ -167,71 +189,58 @@
         <a href="/admin/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
       </div>
     </nav>
+    <div id="menu" class="hidden lg:hidden">
+      <!-- Links para pantallas pequeñas -->
+      <div class="flex flex-col p-4 bg-gray-100">
+        <a href="#" class="a_header product text-sm font-semibold leading-6">Inicio</a>
+        <a href="#" class="a_header features text-sm font-semibold leading-6">Acerca de</a>
+        <a href="#contact" class="a_header marketplace text-sm font-semibold leading-6">Contacto</a>
+        <a href="#company" class="a_header company text-sm font-semibold leading-6">Compañía</a>
+        <a href="/login-user" class="login text-sm font-semibold leading-6 hover:uppercase">Iniciar sesión<span aria-hidden="true">&rarr;</span></a>
+        <a href="/admin/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
   </header>
+  
   <main>
-    <section id="" class="content about-border flex flex-col items-center">
-      <h2 class="text-2xl font-bold mb-4">Acerca de</h2>
-      <p>En AgroDrive, transformamos la forma en que se transportan los productos agropecuarios. Nos especializamos en conectar a agricultores y productores con conductores especializados en el transporte de productos agrícolas, ofreciendo un servicio eficiente, seguro y confiable.</p>
-      <div class="about-img flex justify-center items-center w-40 h-40">
-        <img class="w-full h-full" type="image/png" src="{{ asset('img/Logo_final_filament.png') }}" alt="Logo">
-      </div>
-      <div class="text-left"> <!-- Añadido para alinear los puntos a la izquierda -->
-        <p><strong>¿Cómo Funciona?</strong></p>
-        <p>1. <strong>Solicitud de Servicio:</strong> A través de nuestra plataforma, los agricultores y productores pueden solicitar el transporte de sus productos.</p>
-        <p>2. <strong>Asignación de Conductores:</strong> Los conductores registrados en nuestra red aceptan las solicitudes según su disponibilidad y cercanía.</p>
-        <p>3. <strong>Transporte Seguro:</strong> El producto es recogido y transportado con el máximo cuidado y profesionalismo, garantizando su llegada en óptimas condiciones.</p>
-        <p>4. <strong>Pago y Confirmación:</strong> El costo del servicio es transparente y competitivo, y el pago se realiza de manera segura a través de nuestra plataforma.</p>
-      </div>
-    </section>
-    <section class="m-8 p-2" id="contact">
-    </section>
-    <section id="" class="content">
-      <h2 class="text-2xl font-bold mb-4">Contactenos</h2>
-      <div class="card-container">
-        <div class="card contact-card">
-          <img src="{{ asset('img/gmaillogo.jpeg') }}" alt="Correo Electronico">
-          <p>Contactanos a traves de nuestro <strong>Correo Electronico</strong> dando click aquí.<strong>⭣</strong></p>
-          <button><a href="">Contactar</a></button>
+    <div class="container mx-auto">
+      <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+          <div class="div-img">
+            <img class="img-user mx-auto w-auto" src="{{ asset('img/logo_final_filament.png') }}" alt="Your Company">
+          </div>
+          <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">Inicia sesión</h2>
         </div>
-        <div class="card contact-card">
-          <img src="{{ asset('img/whatsapplogo.jpeg') }}" alt="WhatsApp">
-          <p>Contactanos a traves de nuestro de canales de <strong>WhatsApp</strong> haciendo click aquí<strong>⭣</strong></p>
-          <button><a href="">Contactar</a></button>
-        </div>
-        <div class="card contact-card">
-          <img src="{{ asset('img/githublogo.jpeg') }}" alt="GitHub">
-          <p>Para conocer mejor nuestros trabajos en nuestros repositorios de <strong>GitHub</strong> haz click aquí <strong>⭣</strong></p>
-          <button><a href="">Contactar</a></button>
-        </div>
-      </div>
-    </section>
-    <section class="m-2" id="company">
-    </section>
-    <section id="" class="content">
-      <h2 class="text-2xl font-bold mb-4">Compañia</h2>
-      <div class="card-container">
-        <div class="card">
-          <img src="{{ asset('img/fotoperfilcompany.png') }}" alt="Foto de perfil">
-          <h4 class="company-text">Edward Millán</h4>
-        </div>
-        <div class="card">
-          <img src="{{ asset('img/fotoperfilcompany.png') }}" alt="Foto de perfil">
-          <h4 class="company-text">Camilo Vargas</h4>
-        </div>
-        <div class="card">
-          <img src="{{ asset('img/fotoperfilcompany.png') }}" alt="Foto de perfil">
-          <h4 class="company-text">Alejandro Rojas</h4>
-        </div>
-        <div class="card">
-          <img src="{{ asset('img/fotoperfilcompany.png') }}" alt="Foto de perfil">
-          <h4 class="company-text">Juan Camilo Valencia</h4>
-        </div>
-        <div class="card">
-          <img src="{{ asset('img/fotoperfilcompany.png') }}" alt="Foto de perfil">
-          <h4 class="company-text">Alejandro Martinez</h4>
+        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form class="space-y-6" action="#" method="POST">
+            <div>
+              <label for="email" class="block text-sm font-medium leading-6 text-white">Correo electronico</label>
+              <div class="mt-2">
+                <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between">
+                <label for="password" class="block text-sm font-medium leading-6 text-white">Contraseña</label>
+                <div class="text-sm">
+                  <a href="#" class="font-semibold text-white hover:text-indigo-500">Olvidaste tu contraseña?</a>
+                </div>
+              </div>
+              <div class="mt-2">
+                <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              </div>
+            </div>
+            <div>
+              <button type="submit" class="button-sign flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-lime-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Ingresa</button>
+            </div>
+          </form>
+          <p class="mt-10 text-center text-sm text-gray-500">
+            No estás registrado?
+            <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Registrate aquí</a>
+          </p>
         </div>
       </div>
-    </section>    
+    </div>
   </main>
   <footer>
     <p>&copy; 2024 AgroDrive. Todos los derechos reservados. Prohibida la reproducción total o parcial sin autorización.</p>
@@ -239,7 +248,6 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
     const map = L.map('map').setView([0, 0], 2);
-
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -250,10 +258,7 @@
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
           map.setView([lat, lng], 13);
-
-          L.marker([lat, lng])
-            .addTo(map)
-            .openPopup();
+          L.marker([lat, lng]).addTo(map).openPopup();
         },
         function() {
           alert('Error: El servicio de geolocalización ha fallado.');
@@ -262,6 +267,7 @@
     } else {
       alert('Error: Tu navegador no soporta geolocalización.');
     }
+
   </script>
 </body>
 </html>
