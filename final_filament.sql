@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-06-2024 a las 21:37:32
+-- Tiempo de generación: 20-06-2024 a las 21:39:35
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -111,7 +111,7 @@ CREATE TABLE `packages` (
   `point_initial` varchar(255) NOT NULL,
   `point_finally` varchar(255) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `price` tinyint(1) NOT NULL,
+  `price` float NOT NULL,
   `comment` varchar(255) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
