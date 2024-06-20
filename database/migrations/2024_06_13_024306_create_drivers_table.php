@@ -22,7 +22,8 @@ return new class extends Migration
             $table->string('password');
             $table->string('document')->unique();
             $table->boolean('document_verify');
-            $table->string('photo_licence');
+            $table->string('photo_licence')->nullable(); // Agregar la columna photo_licence
+            $table->string('image')->nullable(); // Agregar la columna image
             $table->float('ratings');
             $table->timestamps();
 

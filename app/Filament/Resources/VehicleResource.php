@@ -6,9 +6,11 @@ use App\Filament\Resources\VehicleResource\Pages;
 use App\Filament\Resources\VehicleResource\RelationManagers;
 use App\Models\Vehicle;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -30,9 +32,13 @@ class VehicleResource extends Resource
                     ->label('Conductor')
                     ->placeholder('Seleccione la cedúla del conductor')
                     ->required(),
-                Forms\Components\TextInput::make('vehicle_photo')
-                    ->maxLength(255)
-                    ->label('Foto Vehiculo'),
+                    FileUpload::make('vehicle_photo')
+                    ->label('Imagen del vehículo')
+                    ->image() // Indica que se trata de una imagen
+                    ->imageEditor()
+                    ->directory('vehicles') // Directorio donde se guardarán las imágenes
+                    ->visibility('public'), // Hacer las imágenes públicas
+
                 Forms\Components\TextInput::make('capacity')
                     ->required()
                     ->label('Capacidad')
@@ -60,9 +66,11 @@ class VehicleResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('driver.document')->label('Conductor')
                 ->searchable(),
-                Tables\Columns\TextColumn::make('vehicle_photo')
-                    ->label('Foto Vehiculo')
-                    ->searchable(),
+
+                ImageColumn::make('vehicle_photo')
+                ->label('Foto del vehículo')
+                ->visibility('public')
+                ->circular(), // Forma circular de la imagen
                 Tables\Columns\TextColumn::make('capacity')
                     ->label('Capacidad')
 

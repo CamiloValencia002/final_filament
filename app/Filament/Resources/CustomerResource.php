@@ -6,9 +6,11 @@ use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers;
 use App\Models\Customer;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -63,6 +65,13 @@ class CustomerResource extends Resource
                     ->required()
                     ->label('Documento')
                     ->maxLength(255),
+
+                FileUpload::make('image')
+                    ->label('Imagen de perfil')
+                    ->image() 
+                    ->imageEditor()
+                    ->directory('customers') 
+                    ->visibility('public'), 
                 Forms\Components\Toggle::make('document_verify')
                     ->required()
                     ->label('Verificacion Documento'),
@@ -79,9 +88,19 @@ class CustomerResource extends Resource
     {
         return $table
             ->columns([
+
+                
+          
                 Tables\Columns\TextColumn::make('user.name')
                 ->label('Administrador')
                 ->searchable(),
+
+                ImageColumn::make('image')
+                ->label('Foto de perfil')
+                ->visibility('public')
+                ->circular(), // Forma circular de la imagen
+
+
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
                     ->label('Nombre'),

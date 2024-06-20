@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Forms\Components\Select;
 use App\Models\User;
+use Filament\Forms\Components\FileUpload;
+use Filament\Tables\Columns\ImageColumn;
 
 class DriverResource extends Resource
 {
@@ -32,6 +34,14 @@ class DriverResource extends Resource
                     ->label('Administrado')
                     ->placeholder('Seleccione un administrador')
                     ->required(),
+
+
+                FileUpload::make('image')
+                    ->label('Foto de perfil')
+                    ->image() // Indica que se trata de una imagen
+                    ->imageEditor()
+                    ->directory('drivers') // Directorio donde se guardarán las imágenes
+                    ->visibility('public'), // Hacer las imágenes públicas
 
                 Forms\Components\TextInput::make('name')
                     ->required()
@@ -56,7 +66,7 @@ class DriverResource extends Resource
                     ->label('Direccion')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('password')
-                    ->password() 
+                    ->password()
                     ->label('Contraseña')
                     ->required()
                     ->maxLength(255)
@@ -68,9 +78,13 @@ class DriverResource extends Resource
                 Forms\Components\Toggle::make('document_verify')
                     ->label('Verificacion del Documento')
                     ->required(),
-                Forms\Components\TextInput::make('photo_licence')
-                    ->label('Foto Licencia')
-                    ->required(),
+
+                FileUpload::make('photo_licence')
+                    ->label('Licencia de conducción')
+                    ->image() // Indica que se trata de una imagen
+                    ->imageEditor()
+                    ->directory('drivers') // Directorio donde se guardarán las imágenes
+                    ->visibility('public'), // Hacer las imágenes públicas
 
                 Forms\Components\TextInput::make('ratings')
                     ->required()
@@ -78,8 +92,8 @@ class DriverResource extends Resource
                     ->numeric()
                     ->readOnly()
                     ->default(0),
-               
-                   
+
+
 
             ]);
     }
@@ -89,8 +103,14 @@ class DriverResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                ->label('Administrador')
-                ->searchable(),
+                    ->label('Administrador')
+                    ->searchable(),
+
+                    ImageColumn::make('image')
+                    ->label('Foto de perfil')
+                    ->visibility('public')
+                    ->circular(), // Forma circular de la imagen
+    
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre')
                     ->searchable(),
@@ -98,7 +118,7 @@ class DriverResource extends Resource
                     ->label('Apellido')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
-                    ->label('Correo') 
+                    ->label('Correo')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('telephone')
                     ->label('Telefono')
@@ -133,7 +153,8 @@ class DriverResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make()->label('Editar'),
-                Tables\Actions\DeleteAction::make()->label('Eliminar'),            ])
+                Tables\Actions\DeleteAction::make()->label('Eliminar'),
+            ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
