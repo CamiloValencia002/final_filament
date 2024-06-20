@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->boolean('price');
             $table->string('comment')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
 
             $table->foreign('id_customer')->references('id')->on('customers')->onDelete('cascade');

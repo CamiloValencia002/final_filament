@@ -6,9 +6,11 @@ use App\Filament\Resources\PackageResource\Pages;
 use App\Filament\Resources\PackageResource\RelationManagers;
 use App\Models\Package;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -31,6 +33,7 @@ class PackageResource extends Resource
                     ->label('Cliente')
                     ->placeholder('Seleccione la cedula del cliente')
                     ->required(),
+                    
                 Forms\Components\TextInput::make('carge_type')
                     ->label('Tipo de Carga')
                     ->required()
@@ -42,6 +45,13 @@ class PackageResource extends Resource
                     ->label('Peso')
                     ->required()
                     ->maxLength(255),
+
+                    FileUpload::make('image')
+                    ->label('Imagen del paquete')
+                    ->image() // Indica que se trata de una imagen
+                    ->imageEditor()
+                    ->directory('packages') // Directorio donde se guardarán las imágenes
+                    ->visibility('public'), // Hacer las imágenes públicas
                 Forms\Components\TextInput::make('point_initial')
                     ->label('Punto Inicial')
                     ->required()
@@ -55,6 +65,7 @@ class PackageResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('price')
                     ->label('Precio')
+                    ->rules('numeric')
                     ->required(),
                 Forms\Components\TextInput::make('comment')
                     ->label('Comentario')
@@ -69,6 +80,11 @@ class PackageResource extends Resource
                 Tables\Columns\TextColumn::make('customers.document')
                 ->label('Cedula del Cliente')
                 ->searchable(),
+
+                ImageColumn::make('image')
+                ->label('Imagen del paquete')
+                ->visibility('public'), // Forma circular de la imagen
+
                 Tables\Columns\TextColumn::make('carge_type')
                     ->label('Tipo de Carga')
                     ->searchable(),

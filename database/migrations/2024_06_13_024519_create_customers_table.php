@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('document')->unique();
             $table->boolean('document_verify');
             $table->float('ratings');
+            $table->string('image')->nullable();
             $table->timestamps();
 
 
