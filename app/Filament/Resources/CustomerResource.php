@@ -68,19 +68,24 @@ class CustomerResource extends Resource
 
                 FileUpload::make('image')
                     ->label('Imagen de perfil')
-                    ->image() 
+                    ->image()
                     ->imageEditor()
-                    ->directory('customers') 
-                    ->visibility('public'), 
+                    ->directory('customers')
+                    ->visibility('public'),
                 Forms\Components\Toggle::make('document_verify')
                     ->required()
                     ->label('Verificacion Documento'),
-                    Forms\Components\TextInput::make('ratings')
+                Forms\Components\TextInput::make('ratings')
                     ->required()
                     ->label('Calificacion')
                     ->numeric()
                     ->readOnly()
                     ->default(0),
+                Forms\Components\Select::make('role')
+                    ->relationship(name: 'role', titleAttribute: 'name',)
+                    ->label('Rol')
+                    ->placeholder('Seleccione un rol')
+                    ->required(),
             ]);
     }
 
@@ -89,16 +94,16 @@ class CustomerResource extends Resource
         return $table
             ->columns([
 
-                
-          
+
+
                 Tables\Columns\TextColumn::make('user.name')
-                ->label('Administrador')
-                ->searchable(),
+                    ->label('Administrador')
+                    ->searchable(),
 
                 ImageColumn::make('image')
-                ->label('Foto de perfil')
-                ->visibility('public')
-                ->circular(), // Forma circular de la imagen
+                    ->label('Foto de perfil')
+                    ->visibility('public')
+                    ->circular(), // Forma circular de la imagen
 
 
                 Tables\Columns\TextColumn::make('name')
