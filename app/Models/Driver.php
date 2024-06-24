@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Permission\Models\Role;
 
 class Driver extends Model
 {
@@ -25,6 +26,9 @@ class Driver extends Model
     }
     public function rating(){
         return $this->belongsToMany(Rating::class);
+    }
+    public function role(){
+        return $this->belongsTo(Role::class);
     }
     public function user(){ //LO COLOQUE COMO "driver" y le quite el many
         return $this->belongsTo(User::class, 'id_admin');

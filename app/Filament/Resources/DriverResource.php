@@ -85,7 +85,11 @@ class DriverResource extends Resource
                     ->imageEditor()
                     ->directory('drivers') // Directorio donde se guardarán las imágenes
                     ->visibility('public'), // Hacer las imágenes públicas
-
+                    Forms\Components\Select::make('role')
+                    ->relationship(name: 'role', titleAttribute: 'name',) // el title sirve para mostrar el campo de la bd
+                    ->label('Rol')
+                    ->placeholder('Seleccione un rol')
+                    ->required(),
                 Forms\Components\TextInput::make('ratings')
                     ->required()
                     ->label('Calificacion')

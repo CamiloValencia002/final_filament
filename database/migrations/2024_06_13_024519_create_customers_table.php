@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('adress');
             $table->string('document')->unique();
             $table->boolean('document_verify');
+            $table->string('role');
             $table->float('ratings');
             $table->string('image')->nullable();
             $table->timestamps();
