@@ -81,18 +81,19 @@ class DriverResource extends Resource
 
                 FileUpload::make('photo_licence')
                     ->label('Licencia de conducción')
-                    ->image() // Indica que se trata de una imagen
+                    ->image()
                     ->imageEditor()
-                    ->directory('drivers') // Directorio donde se guardarán las imágenes
-                    ->visibility('public'), // Hacer las imágenes públicas
+                    ->directory('drivers') 
+                    ->visibility('public'), 
+
                     Forms\Components\Select::make('role')
-                    ->relationship(name: 'role', titleAttribute: 'name',) // el title sirve para mostrar el campo de la bd
+                    ->relationship(name: 'role', titleAttribute: 'name',)
                     ->label('Rol')
                     ->placeholder('Seleccione un rol')
                     ->required(),
                 Forms\Components\TextInput::make('ratings')
                     ->required()
-                    ->label('Calificacion')
+                    ->label('Calificacion') 
                     ->numeric()
                     ->readOnly()
                     ->default(0),
