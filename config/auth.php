@@ -40,6 +40,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        //Se añadio esto
+        'driver' => [
+            'driver' => 'session',
+            'provider' => 'drivers',
+        ],
     ],
 
     /*
@@ -65,6 +71,12 @@ return [
             'model' => App\Models\User::class,
         ],
 
+
+        //Se añadio esto
+        'drivers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Driver::class,
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',

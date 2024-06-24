@@ -17,6 +17,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Register;
 
 class DriverPanelProvider extends PanelProvider
 {
@@ -26,8 +27,9 @@ class DriverPanelProvider extends PanelProvider
             ->id('driver')
             ->path('driver')
             ->login()
+            ->registration(Register::class)
             ->colors([
-                'primary' => Color::Green,
+                'primary' => Color::Amber,
             ])
             ->discoverResources(in: app_path('Filament/Driver/Resources'), for: 'App\\Filament\\Driver\\Resources')
             ->discoverPages(in: app_path('Filament/Driver/Pages'), for: 'App\\Filament\\Driver\\Pages')
@@ -37,7 +39,6 @@ class DriverPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Driver/Widgets'), for: 'App\\Filament\\Driver\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -52,6 +53,7 @@ class DriverPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->authGuard('driver');
     }
 }

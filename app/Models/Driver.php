@@ -2,24 +2,37 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Models\Role;
 
-class Driver extends Model
+class Driver extends Authenticatable implements FilamentUser
 {
-    use HasFactory;
-    protected $guarded = [
-     
+    use Notifiable;
+
+    protected $fillable = [
+        'name', 'last_name', 'email', 'password', 'telephone', 'adress',
+        'document', 'document_verify', 'photo_licence', 'role', 'image',
+        'ratings', 'id_admin'
+        // Añade aquí otros campos que quieras que sean asignables masivamente
     ];
 
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password', 'remember_token',
     ];
 
- 
-    
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $panel->getId() === 'driver';
+    }
+
     
     public function vehicule() {
         return $this->belongsTo(Vehicle::class, 'id_vehicle');
@@ -36,4 +49,8 @@ class Driver extends Model
     public function route(){
         return $this->belongsToMany(Route::class);
     }
+
+
 }
+    
+    
