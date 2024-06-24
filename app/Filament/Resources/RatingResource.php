@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Filament\Resources;
-
+use Mokhosh\FilamentRating\Components\Rating as RatingComponent;
+use Mokhosh\FilamentRating\Columns\RatingColumn;
 use App\Filament\Resources\RatingResource\Pages;
 use App\Filament\Resources\RatingResource\RelationManagers;
 use App\Models\Rating;
@@ -23,41 +24,32 @@ class RatingResource extends Resource
     protected static ?string $navigationGroup = 'Viajes';
 
     public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\Select::make('id_driver')
-                    ->relationship(name: 'driver', titleAttribute: 'document',) // el title sirve para mostrar el campo de la bd
-                    ->label('Conductor')
-                    ->placeholder('Seleccione la cedula del conductor')
-                    ->required(),
-                Forms\Components\Select::make('id_customer')
-                    ->relationship(name: 'customers', titleAttribute: 'document',) // el title sirve para mostrar el campo de la bd
-                    ->label('Cliente')
-                    ->placeholder('Seleccione la cedula del cliente')
-                    ->required(),
-                    Forms\Components\Select::make('id_route')
-                    ->relationship(name: 'route', titleAttribute: 'location',) // el title sirve para mostrar el campo de la bd
-                    ->label('Ruta')
-                    ->placeholder('Seleccione la ruta realizada')
-                    ->required(),
-                    Select::make('ratings')
-                    ->required()
-                    ->placeholder('Califica Tu Experiencia')
-                    ->label('Calificaciones')
-                    ->options([
-                        1 => '1',
-                        2 => '2',
-                        3 => '3',
-                        4 => '4',
-                        5 => '5',
-                    ]),
-                Forms\Components\TextInput::make('comment')
-                    ->required()
-                    ->label('Comentario')
-                    ->maxLength(255),
-            ]);
-    }
+{
+    return $form
+        ->schema([
+            Forms\Components\Select::make('id_driver')
+                ->relationship(name: 'driver', titleAttribute: 'document')
+                ->label('Conductor')
+                ->placeholder('Seleccione la cedula del conductor')
+                ->required(),
+            Forms\Components\Select::make('id_customer')
+                ->relationship(name: 'customers', titleAttribute: 'document')
+                ->label('Cliente')
+                ->placeholder('Seleccione la cedula del cliente')
+                ->required(),
+            Forms\Components\Select::make('id_route')
+                ->relationship(name: 'route', titleAttribute: 'location')
+                ->label('Ruta')
+                ->placeholder('Seleccione la ruta realizada')
+                ->required(),
+            RatingComponent::make('ratings') // Utiliza RatingComponent::make() aquí
+                ->label('Calificación'),
+            Forms\Components\TextInput::make('comment')
+                ->required()
+                ->label('Comentario')
+                ->maxLength(255),
+        ]);
+}
 
     public static function table(Table $table): Table
     {
@@ -72,8 +64,7 @@ class RatingResource extends Resource
                 Tables\Columns\TextColumn::make('route.location')
                 ->label('Ruta')
                 ->searchable(),
-                Tables\Columns\TextColumn::make('ratings')
-                    ->numeric()
+                RatingColumn::make('ratings')
                     ->label('Calificacion')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('comment')
