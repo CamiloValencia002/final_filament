@@ -34,6 +34,7 @@ class PackageResource extends Resource
                     ->label('Cliente')
                     ->placeholder('Seleccione la cedula del cliente')
                     ->required(),
+
                     
                 Forms\Components\TextInput::make('carge_type')
                     ->label('Tipo de Carga')

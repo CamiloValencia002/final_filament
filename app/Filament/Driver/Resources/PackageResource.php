@@ -20,10 +20,10 @@ class PackageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    // public static function getEloquentQuery(): Builder
-    // {
-    //     return parent::getEloquentQuery()->where('state', 'LIBRE');
-    // }
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('state', 'LIBRE');
+    }
     public static function form(Form $form): Form
     {
         return $form
@@ -54,14 +54,15 @@ class PackageResource extends Resource
                     ->maxLength(255),
 
                     
+                    Forms\Components\Hidden::make('id_driver'),
                     Select::make('state')
-                    ->required()
-                    ->placeholder('Estado')
-                    ->label('Estado')
-                    ->options([
-                        'LIBRE' => 'LIBRE',
-                        'OCUPADO' => 'OCUPADO',
-                    ]),
+                        ->required()
+                        ->placeholder('Estado')
+                        ->label('Estado')
+                        ->options([
+                            'LIBRE' => 'LIBRE',
+                            'OCUPADO' => 'OCUPADO',
+                        ]), 
             ]);
     }
 
