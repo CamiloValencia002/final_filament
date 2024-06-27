@@ -4,8 +4,10 @@ use Filament\Forms\Form;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Driver;
-use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
 use Filament\Notifications\Notification;
+use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
 
 class Register extends \Filament\Pages\Auth\Register
@@ -73,9 +75,28 @@ class Register extends \Filament\Pages\Auth\Register
             ->success()
             ->send();
 
-            //Falta añadir la ruta para redireccionar al login y poder que inicie sesión
+   
+            $this->form->fill([
+                'name' => '',
+                'last_name' => '',
+                'email' => '',
+                'telephone' => '',
+                'adress' => '',
+                'document' => '',
+                'password' => '',
+                'passwordConfirmation' => '',
+            ]);
 
- 
+            //Funcion para que "redireccione"
+            return new class('/driver/login') implements RegistrationResponse {
+                public function __construct(protected string $url) {}
+                
+                public function toResponse($request): RedirectResponse
+                {
+                    return new RedirectResponse($this->url);
+                }
+            };
+
         } catch (\Exception $e) {
             Notification::make()
                 ->title('Error en el registro')
