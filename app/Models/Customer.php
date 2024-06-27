@@ -11,6 +11,13 @@ use Spatie\Permission\Models\Role;
 class Customer extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'id_admin','name', 'last_name', 'email', 'password', 'telephone', 'adress', 'document', 'document_verify', 'role', 'ratings', 'image'
+    ];
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
     protected $guarded = [
      
     ];

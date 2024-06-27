@@ -22,6 +22,10 @@ Route::get('login-user', function () {
     return view('login-user');
 })->name('login-user');
 
+Route::get('register-user', function () {
+    return view('register-user');
+})->name('register-user');
+
 
 Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('register', [RegisterController::class, 'register']);
