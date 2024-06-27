@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
 
 
+
 class Register extends \Filament\Pages\Auth\Register
 {
     public function form(Form $form): Form

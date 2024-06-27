@@ -29,7 +29,6 @@
       height: 100vh;
       z-index: -1; /* Para que el mapa esté en el fondo */
     }
-
     header {
       background-color: rgba(161, 173, 149, 0.8);
       width: 100%;
@@ -154,19 +153,34 @@
           <img class="img_header" type="image/png" src="{{ asset('img/Logo_final_filament.png') }}" alt="Logo">
           <span class="agro">Agro</span><span class="drive">Drive</span>
       </div>
-      <div class="hidden lg:flex lg:gap-x-12">
+      <div class="flex lg:hidden">
+        <button id="menu-button" class="text-gray-500 hover:text-gray-900 focus:outline-none focus:text-gray-900">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="hidden lg:flex lg:gap-x-12 menu-links">
         <a href="#" class="a_header product text-sm font-semibold leading-6">Inicio</a>
         <a href="#" class="a_header features text-sm font-semibold leading-6">Acerca de</a>
         <a href="#contact" class="a_header marketplace text-sm font-semibold leading-6">Contacto</a>
         <a href="#company" class="a_header company text-sm font-semibold leading-6">Compañía</a>
       </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end menu-links">
         <a href="/login-user" class="login text-sm font-semibold leading-6 hover:uppercase">Iniciar sesión<span aria-hidden="true">&rarr;</span></a>
       </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end menu-links">
         <a href="/admin/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
       </div>
     </nav>
+    <div id="mobile-menu" class="hidden lg:hidden">
+      <a href="#" class="block a_header product text-sm font-semibold leading-6 p-2">Inicio</a>
+      <a href="#" class="block a_header features text-sm font-semibold leading-6 p-2">Acerca de</a>
+      <a href="#contact" class="block a_header marketplace text-sm font-semibold leading-6 p-2">Contacto</a>
+      <a href="#company" class="block a_header company text-sm font-semibold leading-6 p-2">Compañía</a>
+      <a href="/login-user" class="block login text-sm font-semibold leading-6 p-2 hover:uppercase">Iniciar sesión<span aria-hidden="true">&rarr;</span></a>
+      <a href="/admin/login" class="block login text-sm font-semibold leading-6 p-2 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
+    </div>
   </header>
   <main>
     <section id="" class="content about-border flex flex-col items-center">
@@ -262,6 +276,14 @@
     } else {
       alert('Error: Tu navegador no soporta geolocalización.');
     }
+
+    // Mobile menu toggle
+    const menuButton = document.getElementById('menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
   </script>
 </body>
 </html>

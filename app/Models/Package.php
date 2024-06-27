@@ -8,15 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Package extends Model
 {
     use HasFactory;
-    protected $guarded = [
-     
-    ];  
-    public function customers(){
+
+    protected $guarded = [];
+
+    public function customers()
+    {
         return $this->belongsTo(Customer::class, 'id_customer');
     }
-    
-    public function route(){
+
+    public function route()
+    {
         return $this->belongsToMany(Route::class);
     }
-
 }
