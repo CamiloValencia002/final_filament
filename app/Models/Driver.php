@@ -46,8 +46,8 @@ class Driver extends Authenticatable implements FilamentUser
     public function user(){ //LO COLOQUE COMO "driver" y le quite el many
         return $this->belongsTo(User::class, 'id_admin');
     }
-    public function route(){
-        return $this->belongsToMany(Route::class);
+    public function package(){
+        return $this->belongsToMany(Package::class);
     }
 
 
