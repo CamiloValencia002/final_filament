@@ -9,7 +9,11 @@ class Rating extends Model
 {
     use HasFactory;
     protected $guarded = [
-     
+     'id_driver',
+        'id_customer',
+        'id_package',
+        'ratings',
+        'comment',
     ];
     public function package(){
         return $this->belongsTo(Package::class, 'id_package');

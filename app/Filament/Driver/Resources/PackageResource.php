@@ -5,6 +5,8 @@ namespace App\Filament\Driver\Resources;
 use App\Filament\Driver\Resources\PackageResource\Pages;
 use App\Filament\Driver\Resources\PackageResource\RelationManagers;
 use App\Models\Package;
+use App\Models\Rating;
+use Filament\Actions\ViewAction;
 use Filament\Forms;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
@@ -13,6 +15,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
+use Filament\Tables\Actions\Action as TableAction;
 
 class PackageResource extends Resource
 {
@@ -24,6 +28,7 @@ class PackageResource extends Resource
     {
         return parent::getEloquentQuery()->where('state', 'LIBRE');
     }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -53,16 +58,15 @@ class PackageResource extends Resource
                 Forms\Components\TextInput::make('comment')
                     ->maxLength(255),
 
-                    
-                    Forms\Components\Hidden::make('id_driver'),
-                    Select::make('state')
-                        ->required()
-                        ->placeholder('Estado')
-                        ->label('Estado')
-                        ->options([
-                            'LIBRE' => 'LIBRE',
-                            'OCUPADO' => 'OCUPADO',
-                        ]), 
+                Forms\Components\Hidden::make('id_driver'),
+                Select::make('state')
+                    ->required()
+                    ->placeholder('Estado')
+                    ->label('Estado')
+                    ->options([
+                        'LIBRE' => 'LIBRE',
+                        'OCUPADO' => 'OCUPADO',
+                    ]),
             ]);
     }
 
@@ -90,8 +94,7 @@ class PackageResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('comment')
                     ->searchable(),
-
-                    Tables\Columns\TextColumn::make('state')
+                Tables\Columns\TextColumn::make('state')
                     ->label('Estado')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -104,10 +107,48 @@ class PackageResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('state')
+                    ->options([
+                        'LIBRE' => 'LIBRE',
+                        'OCUPADO' => 'OCUPADO',
+                    ])
+                    ->default('LIBRE'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                TableAction::make('tomar_pedido')
+                    ->label('Tomar Pedido')
+                    ->icon('heroicon-o-truck')
+                    ->hidden(fn ($record) => $record->state !== 'LIBRE')
+                    ->action(function (Package $record) {
+                        $record->update([
+                            'id_driver' => Auth::id(),
+                            'state' => 'OCUPADO'
+                        ]);
+
+                        Rating::create([
+                            'id_driver' => Auth::id(),
+                            'id_customer' => $record->id_customer,
+                            'id_package' => $record->id,
+                            'ratings' => null, // Inicialmente sin calificación
+                            'comment' => null, // Inicialmente sin comentario
+                        ]);
+                        
+                    })
+
+
+                    ->requiresConfirmation(),
+                    TableAction::make('ver_solicitud')
+                    ->label('Ver Solicitud')
+                    ->icon('heroicon-o-eye')
+                    ->modalHeading('Detalles del Paquete y Cliente')
+                    ->modalContent(function (Package $record) {
+                        $customer = $record->customers;
+                        return view('filament.driver.resources.package-resource.view-solicitud', [
+                            'package' => $record,
+                            'customer' => $customer,
+                        ]);
+                    }),
+                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -127,8 +168,6 @@ class PackageResource extends Resource
     {
         return [
             'index' => Pages\ListPackages::route('/'),
-            'create' => Pages\CreatePackage::route('/create'),
-            'edit' => Pages\EditPackage::route('/{record}/edit'),
         ];
     }
 }
