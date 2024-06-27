@@ -67,23 +67,22 @@ class RatingResource extends Resource
             ])
             ->actions([
                 Action::make('calificar')
-                    ->label('Calificar')
-                    ->icon('heroicon-o-star')
-                    ->form([
-                        Ratings::make('ratings')
-                            ->required(),
-                        Forms\Components\Textarea::make('comment')
-                            ->required()
-                            ->maxLength(255),
-                    ])
-                    ->action(function (Rating $record) {
-                        $record->update([
-                            'ratings' => $record->ratings,
-                            'comment' => $record->comment,
-                        ]);
-                    })
-                    ->visible(fn (Rating $record): bool => is_null($record->ratings)),
-
+                ->label('Calificar')
+                ->icon('heroicon-o-star')
+                ->form([
+                    Ratings::make('ratings')
+                        ->required(),
+                    Forms\Components\Textarea::make('comment')
+                        ->required()
+                        ->maxLength(255),
+                ])
+                ->action(function (Rating $record, array $data) {
+                    $record->update([
+                        'ratings' => $data['ratings'],
+                        'comment' => $data['comment'],
+                    ]);
+                })
+                ->visible(fn (Rating $record): bool => is_null($record->ratings)),
 
                 Action::make('ver_detalles')
                     ->label('Ver Detalles')

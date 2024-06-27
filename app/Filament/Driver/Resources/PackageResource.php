@@ -126,17 +126,17 @@ class PackageResource extends Resource
                             'id_driver' => Auth::id(),
                             'id_customer' => $record->id_customer,
                             'id_package' => $record->id,
-                            'ratings' => null, // Inicialmente sin calificación
-                            'comment' => null, // Inicialmente sin comentario
                         ]);
                     })
                     ->requiresConfirmation(),
+
+
                 TableAction::make('ver_solicitud')
                     ->label('Ver Solicitud')
                     ->icon('heroicon-o-eye')
                     ->modalHeading('Detalles del Paquete y Cliente')
                     ->modalContent(function (Package $record) {
-                        $customer = $record->customer; // Assuming the relationship is defined as customer()
+                        $customer = $record->customers; // Assuming the relationship is defined as customer()
                         return view('filament.driver.resources.package-resource.view-solicitud', [
                             'package' => $record,
                             'customer' => $customer,
