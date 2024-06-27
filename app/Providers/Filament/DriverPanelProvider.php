@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Driver\Resources\DriverResource\Pages\EditProfile;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -27,6 +28,7 @@ class DriverPanelProvider extends PanelProvider
             ->id('driver')
             ->path('driver')
             ->login()
+            ->profile(EditProfile::class)
             ->registration(Register::class)
             ->colors([
                 'primary' => Color::Amber,

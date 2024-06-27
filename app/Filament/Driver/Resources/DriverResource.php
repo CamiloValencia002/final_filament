@@ -7,12 +7,14 @@ use App\Filament\Driver\Resources\DriverResource\RelationManagers;
 use App\Models\Driver;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 use PhpParser\Node\Stmt\Label;
 
 class DriverResource extends Resource
@@ -65,7 +67,10 @@ protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
                     Forms\Components\FileUpload::make('image')
                     ->image(),
             ]);
+
     }
+
+    
 
     public static function table(Table $table): Table
     {
