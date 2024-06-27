@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
 
             ->login()
+            ->registration()
             
             ->favicon(asset('img/logo4.svg'))
             ->colors([

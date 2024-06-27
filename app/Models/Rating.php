@@ -11,8 +11,8 @@ class Rating extends Model
     protected $guarded = [
      
     ];
-    public function route(){
-        return $this->belongsTo(Route::class, 'id_route');
+    public function package(){
+        return $this->belongsTo(Package::class, 'id_package');
     }
 
     public function driver(){

@@ -15,8 +15,9 @@ class Package extends Model
         return $this->belongsTo(Customer::class, 'id_customer');
     }
     
-    public function route(){
-        return $this->belongsToMany(Route::class);
+    public function driver() {
+        return $this->belongsTo(Driver::class, 'id_driver');
     }
+ 
 
 }

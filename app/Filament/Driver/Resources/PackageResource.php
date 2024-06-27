@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Driver\Resources;
 
-use App\Filament\Resources\PackageResource\Pages;
-use App\Filament\Resources\PackageResource\RelationManagers;
+use App\Filament\Driver\Resources\PackageResource\Pages;
+use App\Filament\Driver\Resources\PackageResource\RelationManagers;
 use App\Models\Package;
 use Filament\Forms;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -20,58 +18,42 @@ class PackageResource extends Resource
 {
     protected static ?string $model = Package::class;
 
-    protected static ?string $navigationIcon = 'heroicon-c-archive-box';
-    protected static ?string $label = 'Paquetes';
-    protected static ?string $navigationGroup = 'Clientes';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    // public static function getEloquentQuery(): Builder
+    // {
+    //     return parent::getEloquentQuery()->where('state', 'LIBRE');
+    // }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-               
-                    Forms\Components\Select::make('id_customer')
-                    ->relationship(name: 'customers', titleAttribute: 'document',) // el title sirve para mostrar el campo de la bd
-                    ->label('Cliente')
-                    ->placeholder('Seleccione la cedula del cliente')
-                    ->required(),
-                    
+                Forms\Components\TextInput::make('id_customer')
+                    ->required()
+                    ->numeric(),
                 Forms\Components\TextInput::make('carge_type')
-                    ->label('Tipo de Carga')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('size')
-                    ->label('Tamaño')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('weight')
-                    ->label('Peso')
-                    ->required()
                     ->maxLength(255),
-
-                    FileUpload::make('image')
-                    ->label('Imagen del paquete')
-                    ->image() // Indica que se trata de una imagen
-                    ->imageEditor()
-                    ->directory('packages') // Directorio donde se guardarán las imágenes
-                    ->visibility('public'), // Hacer las imágenes públicas
                 Forms\Components\TextInput::make('point_initial')
-                    ->label('Punto Inicial')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('point_finally')
-                    ->label('Punto Final')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
-                    ->label('Descripción')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('price')
-                    ->label('Precio')
-                    ->rules('numeric')
-                    ->required(),
+                    ->required()
+                    ->numeric()
+                    ->prefix('$'),
                 Forms\Components\TextInput::make('comment')
-                    ->label('Comentario')
                     ->maxLength(255),
 
+                    
                     Select::make('state')
                     ->required()
                     ->placeholder('Estado')
@@ -87,49 +69,35 @@ class PackageResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('customers.document')
-                ->label('Cedula del Cliente')
-                ->searchable(),
-
-                ImageColumn::make('image')
-                ->label('Imagen del paquete')
-                ->visibility('public'),
-
+                Tables\Columns\TextColumn::make('id_customer')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('carge_type')
-                    ->label('Tipo de Carga')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('size')
-                    ->label('Tamaño')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('weight')
-                    ->label('Peso')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('point_initial')
-                    ->label('Punto Inicial')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('point_finally')
-                    ->label('Punto Final')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
-                    ->label('Descripción')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('price')
-                    ->label('Precio')
-                    ->searchable(),
+                    ->money()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('comment')
-                    ->label('Comentario')
                     ->searchable(),
-                
+
                     Tables\Columns\TextColumn::make('state')
                     ->label('Estado')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Fecha de Creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Fecha de Actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -138,9 +106,7 @@ class PackageResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make()->label('Editar'),
-                Tables\Actions\DeleteAction::make()->label('Eliminar'),
-
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
