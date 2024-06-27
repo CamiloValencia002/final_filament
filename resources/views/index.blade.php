@@ -170,7 +170,7 @@
         <a href="/login-user" class="login text-sm font-semibold leading-6 hover:uppercase">Iniciar sesión<span aria-hidden="true">&rarr;</span></a>
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end menu-links">
-        <a href="/admin/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
+        <a href="/driver/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
       </div>
     </nav>
     <div id="mobile-menu" class="hidden lg:hidden">

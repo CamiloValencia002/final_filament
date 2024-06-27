@@ -9,13 +9,12 @@
   <style>
     html, body {
       height: 100%;
-      margin: 10%;
-      padding: 10%;
+      margin: 0;
+      padding: 6%;
     }
     body {
       display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
+      justify-content: center;
       align-items: center;
       background: rgba(151, 167, 153, 0.8); /* Verde muy claro y translúcido */
       color: #4A4A4A;
@@ -34,8 +33,8 @@
       width: 100%;
       text-align: center;
       padding: 0.1rem;
-      position: fixed;
-      top: 0; /* Ensures the header stays at the top */
+      position:fixed;
+      top: 0; 
       z-index: 1000;
     }
     footer {
@@ -67,13 +66,12 @@
     }
     main {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: flex-start; /* Content starts below the header */
+      justify-content: center;
       text-align: center;
-      width: 100%;
-      flex: 1; /* Allows main to grow and push footer down */
-      padding-top: 60px; /* Adds space below the header */
+      width: 50%;
+      flex: 1;
+      padding-top: 60px;
     }
     .content {
       background-color: rgba(255, 255, 255, 0.8);
@@ -145,11 +143,11 @@
     .container{
       background-color: #000000c0;
       border-radius: 5px;
-      width: 90%; /* Ajuste de ancho para pantallas pequeñas */
+      width: auto;
       margin: 5%;
-      max-width: 400px; /* Ancho máximo */
+      max-width: 400px;
       max-height: 100%;
-      padding: 2rem; /* Añadir padding para espaciar contenido */
+      padding: 2rem;
     }
     .button-sign{
       background-color: #255B3F;
@@ -179,9 +177,9 @@
       @livewire('registru')
     </div>
   </main>
-  <footer>
+  {{-- <footer>
     <p>&copy; 2024 AgroDrive. Todos los derechos reservados. Prohibida la reproducción total o parcial sin autorización.</p>
-  </footer>
+  </footer> --}}
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
         const map = L.map('map').setView([0, 0], 2);
