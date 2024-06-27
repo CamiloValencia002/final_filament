@@ -2,7 +2,7 @@
 
 namespace App\Filament\Driver\Resources;
 
-use Mokhosh\FilamentRating\Components\Rating as RatingComponent;
+use Mokhosh\FilamentRating\Components\Rating as ratings;
 
 use App\Filament\Driver\Resources\RatingResource\Pages;
 use App\Models\Rating;
@@ -14,6 +14,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Filament\Tables\Actions\Action;
+use Mokhosh\FilamentRating\Columns\RatingColumn;
 
 class RatingResource extends Resource
 {
@@ -21,6 +22,9 @@ class RatingResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-star';
     protected static ?string $navigationLabel = 'Mis Calificaciones';
+
+    
+
 
     public static function form(Form $form): Form
     {
@@ -30,7 +34,7 @@ class RatingResource extends Resource
                     ->default(Auth::id()),
                 Forms\Components\Hidden::make('id_customer'),
                 Forms\Components\Hidden::make('id_package'),
-                RatingComponent::make('ratings')
+                Ratings::make('ratings')
                     ->required()
                     ->min(1)
                     ->max(5),
@@ -53,7 +57,7 @@ class RatingResource extends Resource
                 Tables\Columns\TextColumn::make('package.point_finally')
                     ->label('Punto Final')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('ratings')
+                    RatingColumn::make('ratings')
                     ->label('Calificación'),
                 Tables\Columns\TextColumn::make('comment')
                     ->label('Comentario'),
@@ -66,18 +70,21 @@ class RatingResource extends Resource
                     ->label('Calificar')
                     ->icon('heroicon-o-star')
                     ->form([
-                        RatingComponent::make('ratings')
-                            ->required()
-                            ->min(1)
-                            ->max(5),
+                        Ratings::make('ratings')
+                            ->required(),
                         Forms\Components\Textarea::make('comment')
                             ->required()
                             ->maxLength(255),
                     ])
-                    ->action(function (Rating $record, array $data): void {
-                        $record->update($data);
+                    ->action(function (Rating $record) {
+                        $record->update([
+                            'ratings' => $record->ratings,
+                            'comment' => $record->comment,
+                        ]);
                     })
                     ->visible(fn (Rating $record): bool => is_null($record->ratings)),
+
+
                 Action::make('ver_detalles')
                     ->label('Ver Detalles')
                     ->icon('heroicon-o-eye')

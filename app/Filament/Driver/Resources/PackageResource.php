@@ -3,7 +3,6 @@
 namespace App\Filament\Driver\Resources;
 
 use App\Filament\Driver\Resources\PackageResource\Pages;
-use App\Filament\Driver\Resources\PackageResource\RelationManagers;
 use App\Models\Package;
 use App\Models\Rating;
 use Filament\Actions\ViewAction;
@@ -14,7 +13,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 use Filament\Tables\Actions\Action as TableAction;
 
@@ -57,7 +55,6 @@ class PackageResource extends Resource
                     ->prefix('$'),
                 Forms\Components\TextInput::make('comment')
                     ->maxLength(255),
-
                 Forms\Components\Hidden::make('id_driver'),
                 Select::make('state')
                     ->required()
@@ -132,23 +129,19 @@ class PackageResource extends Resource
                             'ratings' => null, // Inicialmente sin calificación
                             'comment' => null, // Inicialmente sin comentario
                         ]);
-                        
                     })
-
-
                     ->requiresConfirmation(),
-                    TableAction::make('ver_solicitud')
+                TableAction::make('ver_solicitud')
                     ->label('Ver Solicitud')
                     ->icon('heroicon-o-eye')
                     ->modalHeading('Detalles del Paquete y Cliente')
                     ->modalContent(function (Package $record) {
-                        $customer = $record->customers;
+                        $customer = $record->customer; // Assuming the relationship is defined as customer()
                         return view('filament.driver.resources.package-resource.view-solicitud', [
                             'package' => $record,
                             'customer' => $customer,
                         ]);
                     }),
-                
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -160,7 +153,7 @@ class PackageResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            // Define relations if any
         ];
     }
 
