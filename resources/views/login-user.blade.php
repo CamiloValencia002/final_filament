@@ -186,7 +186,7 @@
         <a href="/login-user" class="login text-sm font-semibold leading-6 hover:uppercase">Iniciar sesión<span aria-hidden="true">&rarr;</span></a>
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="/admin/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
+        <a href="/driver/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
       </div>
     </nav>
     <div id="menu" class="hidden lg:hidden">
@@ -222,9 +222,9 @@
             <div>
               <div class="flex items-center justify-between">
                 <label for="password" class="block text-sm font-medium leading-6 text-white">Contraseña</label>
-                <div class="text-sm">
+                {{-- <div class="text-sm">
                   <a href="#" class="font-semibold text-white hover:text-indigo-500">Olvidaste tu contraseña?</a>
-                </div>
+                </div> --}}
               </div>
               <div class="mt-2">
                 <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
@@ -236,7 +236,7 @@
           </form>
           <p class="mt-10 text-center text-sm text-gray-500">
             No estás registrado?
-            <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Registrate aquí</a>
+            <a href="{{ route('register-user')}}" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Registrate aquí</a>
           </p>
         </div>
       </div>

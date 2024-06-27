@@ -11,12 +11,12 @@
         <div><strong>Estado:</strong> {{ $package->state }}</div>
     </div>
 
-    <h4 class="text-lg font-medium mt-6">Información del Cliente</h4>
+    {{-- <h4 class="text-lg font-medium mt-6">Información del Cliente</h4>
     <div class="grid grid-cols-2 gap-4">
         <div><strong>Nombre:</strong> {{ $customer->name }}</div>
         <div><strong>Documento:</strong> {{ $customer->document }}</div>
         <div><strong>Teléfono:</strong> {{ $customer->phone }}</div>
         <div><strong>Dirección:</strong> {{ $customer->address }}</div>
         <div><strong>Correo:</strong> {{ $customer->email }}</div>
-    </div>
+    </div> --}}
 </div>

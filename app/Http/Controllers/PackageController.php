@@ -33,11 +33,12 @@ class PackageController extends Controller
         $package->description = $request->description;
         $package->price = $request->price;
         $package->comment = $request->comment;
+        $package->state = 'LIBRE';
 
         // Guardar el paquete en la base de datos
         $package->save();
 
         // Redirigir a una página de confirmación u otra vista
-        return redirect()->route('login-user')->with('success', '¡Solicitud de paquete enviada correctamente!');
+        return redirect()->route('inicioUser')->with('success', '¡Solicitud de paquete enviada correctamente!');
     }
 }

@@ -61,7 +61,7 @@ class Registru extends Component
         ]);
 
         session()->flash('message', 'Registro exitoso.');
-        return redirect()->route('login-user');
+        return redirect()->route('inicioUser');
     }
     public function render()
     {

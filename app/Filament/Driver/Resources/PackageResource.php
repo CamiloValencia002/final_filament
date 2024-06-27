@@ -122,11 +122,11 @@ class PackageResource extends Resource
                             'state' => 'OCUPADO'
                         ]);
 
-                        Rating::create([
-                            'id_driver' => Auth::id(),
-                            'id_customer' => $record->id_customer,
-                            'id_package' => $record->id,
-                        ]);
+                        // Rating::create([
+                        //     'id_driver' => Auth::id(),
+                        //     'id_customer' => $record->id_customer,
+                        //     'id_package' => $record->id,
+                        // ]);
                     })
                     ->requiresConfirmation(),
 
