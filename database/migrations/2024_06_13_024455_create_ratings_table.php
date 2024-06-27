@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_driver');
             $table->unsignedBigInteger('id_customer');
-            $table->unsignedBigInteger('id_route');
+            $table->unsignedBigInteger('id_package');
             $table->float('ratings');
             $table->string('comment');
             $table->timestamps();
 
             $table->foreign('id_driver')->references('id')->on('drivers')->onDelete('cascade');
             $table->foreign('id_customer')->references('id')->on('customers')->onDelete('cascade');
-            $table->foreign('id_route')->references('id')->on('routes')->onDelete('cascade');
+            $table->foreign('id_package')->references('id')->on('packages')->onDelete('cascade');
             
         });
     }
