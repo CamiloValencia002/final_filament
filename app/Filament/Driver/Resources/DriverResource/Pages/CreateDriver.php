@@ -8,5 +8,12 @@ use Filament\Resources\Pages\CreateRecord;
 
 class CreateDriver extends CreateRecord
 {
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        $data['id_admin'] = 1;
+     
+        return $data;
+    }
     protected static string $resource = DriverResource::class;
 }
