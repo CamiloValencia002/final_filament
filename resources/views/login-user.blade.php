@@ -72,9 +72,8 @@
       align-items: center;
       justify-content: flex-start; /* Content starts below the header */
       text-align: center;
-      width: 100%;
       flex: 1; /* Allows main to grow and push footer down */
-      padding-top: 60px; /* Adds space below the header */
+      padding-top: 120px; /* Adds space below the header */
     }
     .content {
       background-color: rgba(255, 255, 255, 0.8);
@@ -162,6 +161,7 @@
       height: 140px;
     }
   </style>
+  @livewireStyles
 </head>
 <body>
   <div id="map"></div>
@@ -183,7 +183,7 @@
         <a href="#company" class="a_header company text-sm font-semibold leading-6">Compañía</a>
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="/login-user" class="login text-sm font-semibold leading-6 hover:uppercase">Iniciar sesión<span aria-hidden="true">&rarr;</span></a>
+        <a href="/test-log" class="login text-sm font-semibold leading-6 hover:uppercase">Iniciar sesión<span aria-hidden="true">&rarr;</span></a>
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
         <a href="/driver/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
@@ -203,44 +203,7 @@
   </header>
   
   <main>
-    <div class="container mx-auto">
-      <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-        <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-          <div class="div-img">
-            <img class="img-user mx-auto w-auto" src="{{ asset('img/logo_final_filament.png') }}" alt="Your Company">
-          </div>
-          <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white">Inicia sesión</h2>
-        </div>
-        <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form class="space-y-6" action="#" method="POST">
-            <div>
-              <label for="email" class="block text-sm font-medium leading-6 text-white">Correo electronico</label>
-              <div class="mt-2">
-                <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-              </div>
-            </div>
-            <div>
-              <div class="flex items-center justify-between">
-                <label for="password" class="block text-sm font-medium leading-6 text-white">Contraseña</label>
-                {{-- <div class="text-sm">
-                  <a href="#" class="font-semibold text-white hover:text-indigo-500">Olvidaste tu contraseña?</a>
-                </div> --}}
-              </div>
-              <div class="mt-2">
-                <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-              </div>
-            </div>
-            <div>
-              <button type="submit" class="button-sign flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-lime-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Ingresa</button>
-            </div>
-          </form>
-          <p class="mt-10 text-center text-sm text-gray-500">
-            No estás registrado?
-            <a href="{{ route('register-user')}}" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Registrate aquí</a>
-          </p>
-        </div>
-      </div>
-    </div>
+    @livewire('logu')
   </main>
   <footer>
     <p>&copy; 2024 AgroDrive. Todos los derechos reservados. Prohibida la reproducción total o parcial sin autorización.</p>
@@ -269,5 +232,6 @@
     }
 
   </script>
+  @livewireScripts
 </body>
 </html>

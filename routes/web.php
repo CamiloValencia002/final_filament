@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Logu;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PackageController;
 
@@ -15,10 +16,11 @@ Route::get('login-user', function () {
     return view('login-user');
 })->name('login-user');
 
-<<<<<<< HEAD
+Route::get('/login', Logu::class);
+
 Route::get('/packages', [PackageController::class, 'index'])->name('packages'); // Ruta para la vista de paquetes
 Route::post('/procesar-formulario', [PackageController::class, 'store'])->name('procesar.formulario');
-=======
+
 
 Route::get('/packages', [PackageController::class, 'index'])->name('packages'); // Ruta para la vista de paquetes
 Route::post('/procesar-formulario', [PackageController::class, 'store'])->name('procesar.formulario');
@@ -27,5 +29,9 @@ Route::get('register-user', function () {
     return view('register-user');
 })->name('register-user');
 
->>>>>>> 20216aed4f5628788edb68e980a8c98a0c04d866
+Route::get('/test-log', function() {
+    Log::info('Este es un log de prueba.');
+    return 'Revisa el log';
+});
+
 

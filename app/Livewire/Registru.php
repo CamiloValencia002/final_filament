@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Customer;
 use Livewire\Component;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Hash;
 
 class Registru extends Component
@@ -61,7 +62,7 @@ class Registru extends Component
         ]);
 
         session()->flash('message', 'Registro exitoso.');
-        return redirect()->route('inicioUser');
+        return redirect()->route('login-user');
     }
     public function render()
     {
