@@ -15,6 +15,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Filament\Tables\Actions\Action as TableAction;
+use Illuminate\Support\Facades\Log;
 
 class PackageResource extends Resource
 {
@@ -113,22 +114,44 @@ class PackageResource extends Resource
             ])
             ->actions([
                 TableAction::make('tomar_pedido')
-                    ->label('Tomar Pedido')
-                    ->icon('heroicon-o-truck')
-                    ->hidden(fn ($record) => $record->state !== 'LIBRE')
-                    ->action(function (Package $record) {
-                        $record->update([
-                            'id_driver' => Auth::id(),
-                            'state' => 'OCUPADO'
-                        ]);
+    ->label('Tomar Pedido')
+    ->icon('heroicon-o-truck')
+    ->hidden(fn ($record) => $record->state !== 'LIBRE')
+    ->action(function (Package $record) {
+        try {
+            // Actualizar el estado del paquete
+            $record->update([
+                'id_driver' => Auth::id(),
+                'state' => 'OCUPADO'
+            ]);
 
-                        // Rating::create([
-                        //     'id_driver' => Auth::id(),
-                        //     'id_customer' => $record->id_customer,
-                        //     'id_package' => $record->id,
-                        // ]);
-                    })
-                    ->requiresConfirmation(),
+            // Crear un nuevo registro en la tabla Ratings
+            $rating = Rating::create([
+                'id_driver' => Auth::id(),
+                'id_customer' => $record->id_customer,
+                'id_package' => $record->id,
+                'ratings' => null,
+                'comment' => null,
+            ]);
+
+            // Registrar información para depuración
+            Log::info('Nuevo rating creado', [
+                'rating_id' => $rating->id,
+                'package_id' => $record->id,
+                'driver_id' => Auth::id(),
+                'customer_id' => $record->id_customer,
+            ]);
+
+        } catch (\Exception $e) {
+            // Registrar cualquier error que ocurra
+            Log::error('Error al crear rating', [
+                'error' => $e->getMessage(),
+                'package_id' => $record->id,
+            ]);
+            throw $e;
+        }
+    })
+    ->requiresConfirmation(),
 
 
                 TableAction::make('ver_solicitud')

@@ -25,6 +25,7 @@ class DriverPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
+
             ->id('driver')
             ->path('driver')
             ->login()
