@@ -3,7 +3,6 @@
 namespace App\Filament\Driver\Resources;
 
 use App\Filament\Driver\Resources\VehicleResource\Pages;
-use App\Filament\Driver\Resources\VehicleResource\RelationManagers;
 use App\Models\Vehicle;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
@@ -13,48 +12,60 @@ use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
 
 class VehicleResource extends Resource
 {
     protected static ?string $model = Vehicle::class;
+    protected static ?string $navigationIcon = 'heroicon-o-truck';
+    protected static ?string $modelLabel = 'Vehículo';
+    protected static ?string $pluralModelLabel = 'Vehículos';
+
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('id_driver', Auth::user()->id);
+        return parent::getEloquentQuery()->where('id_driver', Auth::id());
     }
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                    FileUpload::make('vehicle_photo')
-                    ->label('Imagen del vehículo')
-                    ->image() // Indica que se trata de una imagen
-                    ->imageEditor()
-                    ->directory('vehicles') // Directorio donde se guardarán las imágenes
-                    ->visibility('public'), // Hacer las imágenes públicas
-                Forms\Components\TextInput::make('capacity')
-                    ->required()
-                    ->label('Capacidad')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('dimension')
-                    ->required()
-                    ->label('Dimensiones')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('type')
-                    ->required()
-                    ->label('Tipo')
-                    ->maxLength(255),
-                Forms\Components\Toggle::make('photo_soat')
-                    ->label('SOAT')
-                    ->required()
-                    ->disabled(),
-                Forms\Components\Toggle::make('photo_tecnomecanic')
-                    ->label('TECNICOMECANICA')
-                    ->required()
-                    ->disabled(),
+                Forms\Components\Card::make()
+                    ->schema([
+                        FileUpload::make('vehicle_photo')
+                            ->label('Imagen del vehículo')
+                            ->image()
+                            ->imageEditor()
+                            ->directory('vehicles')
+                            ->visibility('public')
+                            ->columnSpan(2),
+                        Forms\Components\TextInput::make('capacity')
+                            ->required()
+                            ->label('Capacidad')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('dimension')
+                            ->required()
+                            ->label('Dimensiones')
+                            ->maxLength(255),
+                        Forms\Components\Select::make('type')
+                            ->required()
+                            ->label('Tipo')
+                            ->options([
+                                'Camión' => 'Camión',
+                                'Furgoneta' => 'Furgoneta',
+                                'Camioneta' => 'Camioneta',
+                                'Otro' => 'Otro',
+                            ]),
+                        Forms\Components\Toggle::make('photo_soat')
+                            ->label('SOAT')
+                            ->required()
+                            ->disabled(),
+                        Forms\Components\Toggle::make('photo_tecnomecanic')
+                            ->label('Tecnicomecánica')
+                            ->required()
+                            ->disabled(),
+                    ])
+                    ->columns(2)
             ]);
     }
 
@@ -62,49 +73,33 @@ class VehicleResource extends Resource
     {
         return $table
             ->columns([
-
                 ImageColumn::make('vehicle_photo')
-                ->label('Foto del vehículo')
-                ->visibility('public')
-                ->circular(), // Forma circular de la imagen
+                    ->label('Foto del vehículo')
+                    ->circular(),
                 Tables\Columns\TextColumn::make('capacity')
                     ->label('Capacidad')
-
                     ->searchable(),
                 Tables\Columns\TextColumn::make('dimension')
                     ->label('Dimensiones')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo')
-
                     ->searchable(),
                 Tables\Columns\IconColumn::make('photo_soat')
                     ->label('SOAT')
                     ->boolean(),
                 Tables\Columns\IconColumn::make('photo_tecnomecanic')
-                    ->label('TECNICOMECANICA')
+                    ->label('Tecnicomecánica')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Creado')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Actualizado')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                // No actions
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // No bulk actions
             ]);
     }
 
@@ -120,7 +115,6 @@ class VehicleResource extends Resource
         return [
             'index' => Pages\ListVehicles::route('/'),
             'create' => Pages\CreateVehicle::route('/create'),
-            'edit' => Pages\EditVehicle::route('/{record}/edit'),
         ];
     }
 }
