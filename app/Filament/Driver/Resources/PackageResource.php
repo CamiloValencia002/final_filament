@@ -145,13 +145,13 @@ class PackageResource extends Resource
                     ->color('success')
                     ->hidden(fn ($record) => $record->state !== 'LIBRE')
                     ->action(function (Package $record) {
-
                         $hasVehicle = Vehicle::where('id_driver', Auth::id())->exists();
                         if (!$hasVehicle) {
                             Notification::make()
                                 ->title('No tienes un vehículo registrado')
                                 ->body('Debes registrar un vehículo antes de poder tomar pedidos.')
                                 ->danger()
+                                ->duration(5000) // Duración de 5 segundos
                                 ->send();
                             return;
                         }
@@ -175,6 +175,28 @@ class PackageResource extends Resource
                                 'driver_id' => Auth::id(),
                                 'customer_id' => $record->id_customer,
                             ]);
+
+                            // Notificación de pedido tomado
+                            Notification::make()
+                                ->title('Pedido Tomado')
+                                ->body('Has tomado el pedido exitosamente.')
+                                ->success()
+                                ->duration(10000)
+                                ->send();
+
+                            // Notificación para calificar el viaje
+                            Notification::make()
+                                ->title('No olvides calificar el viaje')
+                                ->body('Cuando termines el viaje, recuerda calificarlo.')
+                                ->actions([
+                                    \Filament\Notifications\Actions\Action::make('calificar')
+                                        ->label('Ir a Calificaciones')
+                                        ->url(route('filament.driver.resources.ratings.index'))
+                                        ->button(),
+                                ])
+                                ->warning()
+                                ->duration(10000)
+                                ->send();
                         } catch (\Exception $e) {
                             Log::error('Error al crear rating', [
                                 'error' => $e->getMessage(),
