@@ -14,9 +14,9 @@ class Package extends Model
 
 
     public function rating()
-{
+    {
     return $this->hasOne(Rating::class, 'id_package');
-}
+    }
     public function customers()
     {
         return $this->belongsTo(Customer::class, 'id_customer');

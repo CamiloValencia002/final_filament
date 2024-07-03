@@ -40,10 +40,10 @@ class Registru extends Component
     {
         // $this->validate();
 
-        // $imagePath = null;
-        // if ($this->image) {
-        //     $imagePath = $this->image->store('images', 'public');
-        // }
+        $imagePath = null;
+        if ($this->image) {
+            $imagePath = $this->image->store('images', 'public');
+        }
 
         // Lógica de registro del usuario
         Customer::create([
@@ -55,10 +55,10 @@ class Registru extends Component
             'telephone' => $this->telephone,
             'adress' => $this->address,
             'document' => $this->document,
-            'document_verify' => $this->document_verify,
-            'role' => $this->role,
-            'ratings' => $this->ratings,     
-            // 'image' => $imagePath,
+            'document_verify' => false,
+            'role' => 'CUSTOMER',
+            'ratings' => 0,     
+            'image' => $imagePath,
         ]);
 
         session()->flash('message', 'Registro exitoso.');

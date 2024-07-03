@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Package;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PackageController extends Controller
 {
@@ -25,6 +26,7 @@ class PackageController extends Controller
 
         // Crear un nuevo paquete con los datos del formulario
         $package = new Package();
+        $package->id_customer = Auth::user()->id;
         $package->carge_type = $request->carge_type;
         $package->size = $request->size;
         $package->weight = $request->weight;
@@ -34,6 +36,7 @@ class PackageController extends Controller
         $package->price = $request->price;
         $package->comment = $request->comment;
         $package->state = 'LIBRE';
+        
 
         // Guardar el paquete en la base de datos
         $package->save();

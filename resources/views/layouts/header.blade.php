@@ -10,7 +10,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
+                <ul class="navbar-nav mx-auto">
                     <li class="nav-item h5">
                         <span class="bi nav-link font-weight-bold">Bienvenido, {{ Auth::user()->name }} |</span>
                     </li>
@@ -20,6 +20,8 @@
                     <li class="nav-item h5">
                         <a class="bi bi-truck nav-link font-weight-bold" href="#travel">Mis viajes |</a>
                     </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item h5">
                         <form method="POST" action="{{ route('logout') }}" class="d-inline">
                             @csrf

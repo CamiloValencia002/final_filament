@@ -1,10 +1,10 @@
 <!doctype html>
-<html>
+<html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AgroDrive</title>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
@@ -26,7 +26,7 @@
     header {
       width: 90%;
       margin-left: 20px;
-      background-color:white;
+      background-color: white;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       position: fixed;
@@ -52,74 +52,99 @@
   <div id="map"></div>
   <header>
     <nav class="navbar navbar-expand-lg navbar-light">
-      <div class="container">
-        <a class="navbar-brand h2" href="#">
-          <img src="{{ asset('img/Logo_final_filament.png') }}" height="60" alt="Logo">
-          <strong><span class="text-success">Agro</span><span class="text-dark">Drive</span></strong>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          @guest
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item h5">
-              <a class="bi bi-houses-fill nav-link font-weight-bold" href="#">Inicio |</a>
-            </li>
-            <li class="nav-item h5">
-              <a class="bi bi-person-vcard-fill nav-link font-weight-bold" href="#">Acerca de |</a>
-            </li>
-            <li class="nav-item h5">
-              <a class="bi bi-telephone-outbound nav-link font-weight-bold" href="#contact">Contacto |</a>
-            </li>
-            <li class="nav-item h5">
-              <a class="bi bi-shop nav-link font-weight-bold" href="#company">Compañía |</a>
-            </li>
-            <li class="nav-item h5">
-              <a class="bi bi-person-circle nav-link font-weight-bold" href="/login-user">Iniciar sesión |</a>
-            </li>
-            <li class="nav-item h5">
-              <a class=" bi bi-taxi-front nav-link font-weight-bold" href="/driver/login">Soy Conductor</a>
-            </li>
-          </ul>
-          @else
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item h5">
-              <a class="bi bi-houses-fill nav-link font-weight-bold" href="#">Inicio |</a>
-            </li>
-            <li class="nav-item h5">
-              <a class="bi bi-person-vcard-fill nav-link font-weight-bold" href="#">Acerca de |</a>
-            </li>
-            <li class="nav-item h5">
-              <a class="bi bi-telephone-outbound nav-link font-weight-bold" href="#contact">Contacto |</a>
-            </li>
-            <li class="nav-item h5">
-              <a class="bi bi-shop nav-link font-weight-bold" href="#company">Compañía |</a>
-            </li>
-            <li class="nav-item h5">
-              <a class="bi nav-link font-weight-bold">Bienvenido, {{ Auth::user()->name }} |</a>
-            </li>
-            <li class="nav-item h5">
-              <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="btn btn-success font-weight-bold">Cerrar sesión</button>
-              </form>
-            </li>
-            <li class="nav-item h5">
-              <a href="/inicioUser" class="bi nav-link font-weight-bold">Solicitar Servicio |</a>
-            </li>
-          </ul>
-          @endguest
+        <div class="container">
+            <a class="navbar-brand h2" href="#">
+                <img src="{{ asset('img/Logo_final_filament.png') }}" height="60" alt="Logo">
+                <strong><span class="text-success">Agro</span><span class="text-dark">Drive</span></strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                @guest
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item h5">
+                        <a class="bi bi-houses-fill nav-link font-weight-bold" href="#">Inicio |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-person-vcard-fill nav-link font-weight-bold" href="#">Acerca de |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-telephone-outbound nav-link font-weight-bold" href="#contact">Contacto |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-shop nav-link font-weight-bold" href="#company">Compañía |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-person-circle nav-link font-weight-bold" href="/login-user">Iniciar sesión
+                            |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-taxi-front nav-link font-weight-bold" href="/driver/login">Soy
+                            Conductor</a>
+                    </li>
+                </ul>
+                @else
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item h5">
+                        <a class="bi bi-houses-fill nav-link font-weight-bold" href="#">Inicio |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-person-vcard-fill nav-link font-weight-bold" href="#">Acerca de |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-telephone-outbound nav-link font-weight-bold" href="#contact">Contacto
+                            |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-shop nav-link font-weight-bold" href="#company">Compañía |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a href="/inicioUser" class="bi nav-link font-weight-bold">Solicitar Servicio |</a>
+                    </li>
+                </ul>
+                <div class="dropdown">
+                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ Auth::user()->name }}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="#"><img src="{{ asset('img/user-default.png') }}"
+                                    alt="User Image" class="rounded-circle" width="30"> Perfil</a></li>
+                        <li><a class="dropdown-item" href="#">
+                                @php
+                                $ratings = Auth::user()->ratings;
+                                @endphp
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $ratings)
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    @else
+                                        <i class="bi bi-star text-warning"></i>
+                                    @endif
+                                @endfor
+                                {{ $ratings }}
+                            </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-danger">Cerrar sesión</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                @endguest
+            </div>
         </div>
-      </div>
     </nav>
-  </header>
+</header>
   <main class="container mt-5 pt-5">
   <section class="content-box text-center my-5">
-  <div class="container">
+    <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 1000px; margin: 0 auto;">
+        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" style="width: 1000px; margin: 0 auto;">
           <div class="carousel-inner">
             <div class="carousel-item active">
               <img src="{{ asset('img/logo_rectangulo.png') }}" class="d-block mx-auto mb-4" style="width: 1000px; height: 500px; object-fit: cover; border-radius: 10px;" alt="About Me">
@@ -131,24 +156,24 @@
               <img src="{{ asset('img/carousel2.jpeg') }}" class="d-block mx-auto mb-4" style="width: 1000px; height: 500px; object-fit: cover; border-radius: 10px;" alt="Carousel 2">
             </div>
           </div>
-          <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev" style="z-index: 1;">
+          <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev" style="z-index: 1;">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
+            <span class="visually-hidden">Previous</span>
           </a>
-          <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next" style="z-index: 1;">
+          <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next" style="z-index: 1;">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
+            <span class="visually-hidden">Next</span>
           </a>       
         </div>
         <ul class="list-unstyled">
-          <li><span class="bi bi-envelope-plus-fill h1 text-success mr-3"></span> <strong class="h3">Solicitud de Servicio</strong></li>
-          <li><span class="bi bi-car-front-fill h1 text-success mr-3"></span> <strong class="h3">Asignación de Conductores</strong></li>
-          <li><span class="bi bi-shield-fill-check h1 text-success mr-3"></span><strong class="h3">Transporte Seguro</strong></li>
+          <li><span class="bi bi-envelope-plus-fill h1 text-success me-3"></span> <strong class="h3">Solicitud de Servicio</strong></li>
+          <li><span class="bi bi-car-front-fill h1 text-success me-3"></span> <strong class="h3">Asignación de Conductores</strong></li>
+          <li><span class="bi bi-shield-fill-check h1 text-success me-3"></span><strong class="h3">Transporte Seguro</strong></li>
         </ul>
       </div>
     </div>
-  </div>
-</section>
+    </div>
+  </section>
 <section id="contact" class="content-box my-5">
   <h2 class="text-center font-weight-bold mb-4">Contáctenos</h2>
   <div class="row justify-content-center">
@@ -200,9 +225,9 @@
       <p class="font-weight-bold">&copy; 2024 <a href="/admin/login">AgroDrive</a>. Todos los derechos reservados. Prohibida la reproducción total o parcial sin autorización.</p>
     </div>
   </footer>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
     const map = L.map('map').setView([0, 0], 2);

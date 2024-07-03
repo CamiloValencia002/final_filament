@@ -61,28 +61,12 @@
         @error('document') <span class="text-red-500">{{ $message }}</span> @enderror
       </div>
       
-      <div class="mb-4">
-        <label for="role" class="block text-gray-700">Rol</label>
-        <input type="text" id="role" wire:model="role" class="w-full p-2 border border-gray-300 rounded">
-        @error('role') <span class="text-red-500">{{ $message }}</span> @enderror
-      </div>
       
       <div class="mb-4">
-        <label for="ratings" class="block text-gray-700">Calificaciones</label>
-        <input type="number" step="0.1" id="ratings" wire:model="ratings" class="w-full p-2 border border-gray-300 rounded">
-        @error('ratings') <span class="text-red-500">{{ $message }}</span> @enderror
-      </div>
-      
-      {{-- <div class="mb-4">
         <label for="image" class="block text-gray-700">Imagen</label>
         <input type="file" id="image" wire:model="image" class="w-full p-2 border border-gray-300 rounded">
         @error('image') <span class="text-red-500">{{ $message }}</span> @enderror
-      </div> --}}
-      
-      <div class="mb-4 flex items-center">
-        <input type="checkbox" id="document_verify" wire:model="document_verify" class="mr-2">
-        <label for="document_verify" class="text-gray-700">Verificación de documento</label>
-      </div>
+      </div>    
       
       <button type="submit" class="w-full bg-green-600 text-white p-2 rounded">Registrar</button>
     </form>
