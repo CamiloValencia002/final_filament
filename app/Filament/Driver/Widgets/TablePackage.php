@@ -1,52 +1,25 @@
 <?php
 
-namespace App\Filament\Driver\Resources;
+namespace App\Filament\Driver\Widgets;
 
-use App\Filament\Driver\Resources\MyTripsResource\Pages;
-use App\Filament\Driver\Resources\MyTripsResource\RelationManagers;
 use App\Models\Package;
-use App\Models\Rating;
 use App\Models\Vehicle;
-use Filament\Forms;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Form;
-use Filament\Notifications\Notification;
-use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Tables\Actions\Action as TableAction;
+use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Support\Facades\Auth;
+use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Log;
+use Filament\Tables\Actions\Action as TableAction;
 
-
-class MyTripsResource extends Resource
+class TablePackage extends BaseWidget
 {
-    protected static ?string $model = Package::class;
+    protected int | string | array $columnSpan = 'full';
 
-    protected static ?string $navigationIcon = 'heroicon-s-globe-europe-africa';
-
-    protected static ?string $modelLabel = 'Mi viaje';
-    protected static ?string $pluralModelLabel = 'Mis viajes';
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-        ->where('state', 'EN PROCESO')
-        ->where('id_driver', Auth::id());
-    }
-
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-            ]);
-    }
-
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->query(Package::query()->where('state', 'LIBRE'))
             ->columns([
                 Tables\Columns\TextColumn::make('id_customer')
                     ->label('ID del Cliente')
@@ -92,63 +65,42 @@ class MyTripsResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                // Puedes agregar filtros si lo deseas
             ])
             ->actions([
-                TableAction::make('finalizar_pedido')
-                ->label('Terminar entrega')
-                ->icon('heroicon-o-check-circle')
-                ->button()
-                ->color('success')
-                ->hidden(fn ($record) => $record->state !== 'EN PROCESO' || $record->id_driver !== Auth::id())
-                ->action(function (Package $record) {
+                TableAction::make('tomar_pedido')
+                    ->label('Tomar Pedido')
+                    ->icon('heroicon-o-truck')
+                    ->button()
+                    ->color('success')
+                    ->hidden(fn ($record) => $record->state !== 'LIBRE')
+                    ->action(function (Package $record) {
                         $hasVehicle = Vehicle::where('id_driver', Auth::id())->exists();
                         if (!$hasVehicle) {
                             Notification::make()
                                 ->title('No tienes un vehículo registrado')
                                 ->body('Debes registrar un vehículo antes de poder tomar pedidos.')
                                 ->danger()
-                                ->duration(5000) // Duración de 5 segundos
+                                ->duration(5000)
                                 ->send();
                             return;
                         }
                         try {
                             $record->update([
                                 'id_driver' => Auth::id(),
-                                'state' => 'FINALIZADO'
+                                'state' => 'EN PROCESO'
                             ]);
 
-                            $rating = Rating::create([
-                                'id_driver' => Auth::id(),
-                                'id_customer' => $record->id_customer,
-                                'id_package' => $record->id,
-                            ]);
-
-                            Log::info('Nuevo rating creado', [
-                                'rating_id' => $rating->id,
-                                'package_id' => $record->id,
-                                'driver_id' => Auth::id(),
-                                'customer_id' => $record->id_customer,
-                            ]);
-
-                            // Notificación de pedido tomado
                             Notification::make()
-                                ->title('Pedido finalizado')
-                                ->body('Has finalizado el pedido exitosamente.')
-                                ->success()
-                                ->duration(10000)
-                                ->send();
-
-                            // Notificación para calificar el viaje
-                            Notification::make()
-                                ->title('No olvides calificar el viaje')
-                                ->body('Cuando termines el viaje, recuerda calificarlo.')
+                                ->title('Pedido Tomado')
+                                ->body('Has tomado el pedido exitosamente.')
                                 ->actions([
-                                    \Filament\Notifications\Actions\Action::make('calificar')
-                                        ->label('Ir a Calificaciones')
-                                        ->url(route('filament.driver.resources.ratings.index'))
+                                    \Filament\Notifications\Actions\Action::make('Mi viaje')
+                                        ->label('Ir a mis viajes')
+                                        ->url(route('filament.driver.resources.my-trips.index'))
                                         ->button(),
                                 ])
-                                ->warning()
+                                ->success()
                                 ->duration(10000)
                                 ->send();
                         } catch (\Exception $e) {
@@ -160,9 +112,9 @@ class MyTripsResource extends Resource
                         }
                     })
                     ->requiresConfirmation()
-                    ->modalHeading('¿Estás seguro de finalizar este pedido?')
-                    ->modalDescription('Una vez finalizado, no podrás revertir esta acción.')
-                    ->modalSubmitActionLabel('Sí, finalizar pedido')
+                    ->modalHeading('¿Estás seguro de tomar este pedido?')
+                    ->modalDescription('Una vez tomado, no podrás devolverlo.')
+                    ->modalSubmitActionLabel('Sí, tomar pedido')
                     ->modalCancelActionLabel('Cancelar'),
 
                 TableAction::make('ver_solicitud')
@@ -180,22 +132,5 @@ class MyTripsResource extends Resource
                     }),
             ])
             ->bulkActions([]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListMyTrips::route('/'),
-        ];
-    }
-
-    public static function canCreate(): bool
-    {
-        return false;
     }
 }

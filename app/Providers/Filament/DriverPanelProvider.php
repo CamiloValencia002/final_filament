@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Driver\Resources\DriverResource\Pages\EditProfile;
+use App\Filament\Driver\Resources\PackageResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -38,10 +39,12 @@ class DriverPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Driver/Pages'), for: 'App\\Filament\\Driver\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+                
             ])
             ->discoverWidgets(in: app_path('Filament/Driver/Widgets'), for: 'App\\Filament\\Driver\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
+                // Widgets\AccountWidget::class,
+                \App\Filament\Driver\Widgets\TablePackage::class,
             ])
             ->middleware([
                 EncryptCookies::class,
