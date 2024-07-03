@@ -2,7 +2,8 @@
 
 namespace App\Filament\Driver\Resources;
 
-use App\Filament\Driver\Resources\PackageResource\Pages;
+use App\Filament\Driver\Resources\MyTripsResource\Pages;
+use App\Filament\Driver\Resources\MyTripsResource\RelationManagers;
 use App\Models\Package;
 use App\Models\Rating;
 use App\Models\Vehicle;
@@ -14,29 +15,32 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\Action as TableAction;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
-class PackageResource extends Resource
+
+class MyTripsResource extends Resource
 {
     protected static ?string $model = Package::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $modelLabel = 'Paquete';
-    protected static ?string $pluralModelLabel = 'Paquetes';
+    protected static ?string $modelLabel = 'Mi viaje';
+    protected static ?string $pluralModelLabel = 'Mis viajes';
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->where('state', 'LIBRE');
+        return parent::getEloquentQuery()
+        ->where('state', 'EN PROCESO')
+        ->where('id_driver', Auth::id());
     }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-              
             ]);
     }
 
@@ -90,13 +94,13 @@ class PackageResource extends Resource
             ->filters([
             ])
             ->actions([
-                TableAction::make('tomar_pedido')
-                    ->label('Tomar Pedido')
-                    ->icon('heroicon-o-truck')
-                    ->button()
-                    ->color('success')
-                    ->hidden(fn ($record) => $record->state !== 'LIBRE')
-                    ->action(function (Package $record) {
+                TableAction::make('finalizar_pedido')
+                ->label('Terminar entrega')
+                ->icon('heroicon-o-check-circle')
+                ->button()
+                ->color('success')
+                ->hidden(fn ($record) => $record->state !== 'EN PROCESO' || $record->id_driver !== Auth::id())
+                ->action(function (Package $record) {
                         $hasVehicle = Vehicle::where('id_driver', Auth::id())->exists();
                         if (!$hasVehicle) {
                             Notification::make()
@@ -110,21 +114,41 @@ class PackageResource extends Resource
                         try {
                             $record->update([
                                 'id_driver' => Auth::id(),
-                                'state' => 'EN PROCESO'
+                                'state' => 'FINALIZADO'
                             ]);
 
+                            $rating = Rating::create([
+                                'id_driver' => Auth::id(),
+                                'id_customer' => $record->id_customer,
+                                'id_package' => $record->id,
+                            ]);
+
+                            Log::info('Nuevo rating creado', [
+                                'rating_id' => $rating->id,
+                                'package_id' => $record->id,
+                                'driver_id' => Auth::id(),
+                                'customer_id' => $record->id_customer,
+                            ]);
 
                             // Notificación de pedido tomado
                             Notification::make()
-                                ->title('Pedido Tomado')
-                                ->body('Has tomado el pedido exitosamente.')
+                                ->title('Pedido finalizado')
+                                ->body('Has finalizado el pedido exitosamente.')
+                                ->success()
+                                ->duration(10000)
+                                ->send();
+
+                            // Notificación para calificar el viaje
+                            Notification::make()
+                                ->title('No olvides calificar el viaje')
+                                ->body('Cuando termines el viaje, recuerda calificarlo.')
                                 ->actions([
-                                    \Filament\Notifications\Actions\Action::make('Mi viaje')
-                                        ->label('Ir a mis viajes')
-                                        ->url(route('filament.driver.resources.my-trips.index'))
+                                    \Filament\Notifications\Actions\Action::make('calificar')
+                                        ->label('Ir a Calificaciones')
+                                        ->url(route('filament.driver.resources.ratings.index'))
                                         ->button(),
                                 ])
-                                ->success()
+                                ->warning()
                                 ->duration(10000)
                                 ->send();
                         } catch (\Exception $e) {
@@ -136,9 +160,9 @@ class PackageResource extends Resource
                         }
                     })
                     ->requiresConfirmation()
-                    ->modalHeading('¿Estás seguro de tomar este pedido?')
-                    ->modalDescription('Una vez tomado, no podrás devolverlo.')
-                    ->modalSubmitActionLabel('Sí, tomar pedido')
+                    ->modalHeading('¿Estás seguro de finalizar este pedido?')
+                    ->modalDescription('Una vez finalizado, no podrás revertir esta acción.')
+                    ->modalSubmitActionLabel('Sí, finalizar pedido')
                     ->modalCancelActionLabel('Cancelar'),
 
                 TableAction::make('ver_solicitud')
@@ -166,7 +190,7 @@ class PackageResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPackages::route('/'),
+            'index' => Pages\ListMyTrips::route('/'),
         ];
     }
 

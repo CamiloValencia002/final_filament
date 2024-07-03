@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\SelectFilter;
 use Mokhosh\FilamentRating\Columns\RatingColumn;
 
 class RatingResource extends Resource
@@ -38,7 +39,6 @@ class RatingResource extends Resource
                     ->max(5),
                 Forms\Components\Textarea::make('comment')
                     ->label('Comentario')
-                    ->required()
                     ->maxLength(255),
             ]);
     }
@@ -47,6 +47,9 @@ class RatingResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('package.id')
+                ->label('ID del paquete')
+                ->searchable(),
                 Tables\Columns\TextColumn::make('package.carge_type')
                     ->label('Tipo de Carga')
                     ->searchable(),
@@ -56,41 +59,16 @@ class RatingResource extends Resource
                 Tables\Columns\TextColumn::make('package.point_finally')
                     ->label('Punto Final')
                     ->searchable(),
-                RatingColumn::make('ratings')
-                    ->label('Calificación'),
-                Tables\Columns\TextColumn::make('comment')
-                    ->label('Comentario')
+                RatingColumn::make('rating_driver')
+                    ->label('Mi calificación'),
+                Tables\Columns\TextColumn::make('comment_driver')
+                    ->label('Mi comentario')
                     ->limit(30),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
-                // No se necesitan filtros por ahora
             ])
             ->actions([
-                Action::make('calificar')
-                    ->label('Calificar')
-                    ->icon('heroicon-o-star')
-                    ->button()
-                    ->color('warning')
-                    ->form([
-                        RatingInput::make('ratings')
-                            ->label('Calificación')
-                            ->required(),
-                        Forms\Components\Textarea::make('comment')
-                            ->label('Comentario')
-                            ->required()
-                            ->maxLength(255),
-                    ])
-                    ->action(function (Rating $record, array $data) {
-                        $record->update([
-                            'ratings' => $data['ratings'],
-                            'comment' => $data['comment'],
-                        ]);
-                    })
-                    ->visible(fn (Rating $record): bool => is_null($record->ratings))
-                    ->modalHeading('Calificar Servicio')
-                    ->modalSubmitActionLabel('Enviar Calificación')
-                    ->modalCancelActionLabel('Cancelar'),
-
                 Action::make('ver_detalles')
                     ->label('Ver Detalles')
                     ->icon('heroicon-o-eye')
@@ -101,6 +79,31 @@ class RatingResource extends Resource
                         'customer' => $record->package->customers,
                     ]))
                     ->modalHeading('Detalles del Servicio'),
+                Action::make('calificar')
+                    ->label('Calificar cliente')
+                    ->icon('heroicon-o-star')
+                    ->button()
+                    ->color('warning')
+                    ->form([
+                        RatingInput::make('rating_driver')
+                            ->label('Calificar cliente')
+                            ->required(),
+                        Forms\Components\Textarea::make('comment_driver')
+                            ->label('Comentario (opcional)')
+                            ->maxLength(255),
+                    ])
+                    ->action(function (Rating $record, array $data) {
+                        $record->update([
+                            'rating_driver' => $data['rating_driver'],
+                            'comment_driver' => $data['comment_driver'],
+                        ]);
+                    })
+                    ->visible(fn (Rating $record): bool => is_null($record->rating_driver))
+                    ->modalHeading('Calificar cliente')
+                    ->modalSubmitActionLabel('Enviar Calificación')
+                    ->modalCancelActionLabel('Cancelar'),
+
+                
             ])
             ->bulkActions([]);
     }

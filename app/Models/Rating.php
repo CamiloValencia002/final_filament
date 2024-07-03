@@ -12,16 +12,21 @@ class Rating extends Model
      'id_driver',
         'id_customer',
         'id_package',
-        'ratings',
-        'comment',
+        'rating_driver',
+        'rating_driver',
+        'comment_driver',
+        'comment_customer',
+
     ];
 
     protected $fillable = [
         'id_driver',
         'id_customer',
         'id_package',
-        'ratings',
-        'comment',
+        'rating_driver',
+        'rating_driver',
+        'comment_driver',
+        'comment_customer',
     ]; 
        public function package(){
         return $this->belongsTo(Package::class, 'id_package');

@@ -16,8 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('id_driver');
             $table->unsignedBigInteger('id_customer');
             $table->unsignedBigInteger('id_package');
-            $table->float('ratings');
-            $table->string('comment');
+            $table->double('rating_driver ');
+            $table->double('rating_customer');
+
+            $table->text('comment_driver');
+            $table->text('comment_customer');
             $table->timestamps();
 
             $table->foreign('id_driver')->references('id')->on('drivers')->onDelete('cascade');
