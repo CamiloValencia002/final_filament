@@ -20,6 +20,8 @@ class VehicleResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-truck';
     protected static ?string $modelLabel = 'Vehículo';
     protected static ?string $pluralModelLabel = 'Vehículos';
+    protected static ?int $sort = 5;
+    protected static ?int $navigationSort = 5;
 
     public static function getEloquentQuery(): Builder
     {

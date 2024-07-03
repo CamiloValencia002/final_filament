@@ -23,6 +23,8 @@ class RatingResource extends Resource
     protected static ?string $navigationLabel = 'Mis Calificaciones';
     protected static ?string $modelLabel = 'Calificación';
     protected static ?string $pluralModelLabel = 'Calificaciones';
+    protected static ?int $sort = 4;
+    protected static ?int $navigationSort = 4;
 
     public static function form(Form $form): Form
     {

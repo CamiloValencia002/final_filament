@@ -29,6 +29,8 @@ class MyTripsResource extends Resource
 
     protected static ?string $modelLabel = 'Mi viaje';
     protected static ?string $pluralModelLabel = 'Mis viajes';
+    protected static ?int $sort = 3;
+    protected static ?int $navigationSort = 3;
 
     public static function getEloquentQuery(): Builder
     {

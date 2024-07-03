@@ -35,7 +35,7 @@ class DriverWidget extends BaseWidget
                 ->description('Aquí encontrarás todos tus viajes')
                 ->descriptionIcon('heroicon-m-magnifying-glass-plus', IconPosition::Before)
                 ->color('success')
-                ->chart([0, 5, 5, 20, 50]),
+                ->chart([0, 5, 10, 30, 60]),
 
             Stat::make(
                 'Tus Ganancias',

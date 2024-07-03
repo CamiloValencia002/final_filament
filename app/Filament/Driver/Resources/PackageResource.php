@@ -25,6 +25,8 @@ class PackageResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $modelLabel = 'Paquete';
+    protected static ?int $sort = 2;
+    protected static ?int $navigationSort = 2;
     protected static ?string $pluralModelLabel = 'Paquetes';
 
     public static function getEloquentQuery(): Builder
