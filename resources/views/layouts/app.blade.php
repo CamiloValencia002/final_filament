@@ -115,5 +115,7 @@
             alert('Error: Tu navegador no soporta geolocalización.');
         }
     </script>
+    @include('sweetalert::alert')
 </body>
+
 </html>

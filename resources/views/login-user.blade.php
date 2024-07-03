@@ -1,231 +1,188 @@
-
 <!doctype html>
-<html>
+<html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AgroDrive</title>
-  <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
   <style>
     html, body {
       height: 100%;
       margin: 0;
       padding: 0;
     }
-    body {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-      align-items: center;
-      background: rgba(151, 167, 153, 0.8); /* Verde muy claro y translúcido */
-      color: #4A4A4A;
-      min-height: 100vh;
-    }
-    #map {
+      #map {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100vh;
-      z-index: -1; /* Para que el mapa esté en el fondo */
+      z-index: -1;
     }
-
     header {
-      background-color: rgba(161, 173, 149, 0.8);
-      width: 100%;
-      text-align: center;
-      padding: 0.1rem;
-      position: fixed;
-      top: 0; /* Ensures the header stays at the top */
-      z-index: 1000;
-    }
-    footer {
-      background-color: rgba(161, 173, 149, 0.8);
-      width: 100%;
-      text-align: center;
-      padding: 0.1rem;
-      z-index: 1;
-    }
-    .header-logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .header-logo .agro {
-      color: #2C6E49; /* Verde oscuro */
-    }
-    .header-logo .drive {
-      color: #4A4A4A;
-    }
-    .header-logo img {
-      height: 40px;
-      margin-right: 10px;
-    }
-    .header-logo span {
-      font-size: 1.5em;
-      font-weight: bold;
-      color: #2C6E49;
-    }
-    main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start; /* Content starts below the header */
-      text-align: center;
-      flex: 1; /* Allows main to grow and push footer down */
-      padding-top: 120px; /* Adds space below the header */
-    }
-    .content {
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 1rem;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      margin-top: 3%;
-    }
-    .a_header {
-      color: #000000;
-      transition: transform 0.3s ease;
-    }
-    .a_header:hover {
-      transform: scale(1.1);
-    }
-    section {
-      box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-      margin: 10%;
-      margin-top: 8%;
-    }
-    .card-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .card {
+      width: 90%;
+      margin-left: 20px;
       background-color: white;
-      padding: 20px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center; /* Centrar el contenido dentro de la tarjeta */
+      position:fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
     }
-    .card img {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      display: block;
-      margin: 0 auto; /* Centrar la imagen */
+    .content-box {
+      background-color: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
     }
-    .contact-card {
-      max-width: 400px; /* Ancho máximo diferente para las tarjetas de contacto */
+
+    body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
     }
-    .contact-card button {
-      background-color: #2C6E49; /* Color de fondo verde oscuro */
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 10px; /* Espacio entre el botón y el contenido */
-      text-align: center;
+
+    main {
+    flex: 1;
     }
-    .contact-card button:hover {
-      background-color: #255B3F; /* Color más oscuro en hover */
+    .main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    } 
+    footer {
+    background-color: white;
+    border-radius: 10px 10px 0 0;
+    padding: 15px 0;
+    box-shadow: 0 -5px 5px -5px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    margin-top: auto;
     }
-    .about-img{
-      margin: 2%;
-    }
-    h2, p{
-      color: #000000;
-    }
-    h4{
-        color: black !important;
-        font-size: 20px;
-        font-weight: bold;
-    }
-    .container{
-      background-color: #000000c0;
-      border-radius: 5px;
-      width: 90%; /* Ajuste de ancho para pantallas pequeñas */
-      margin: 5%;
-      max-width: 400px; /* Ancho máximo */
-      max-height: 100%;
-      padding: 2rem; /* Añadir padding para espaciar contenido */
-    }
-    .button-sign{
-      background-color: #255B3F;
-    }
-    .div-img{
-      height: 100px;
-    }
-    .img-user{
-      height: 140px;
+    .container.login{
+    padding-top: 120px;
     }
   </style>
-  @livewireStyles
 </head>
 <body>
   <div id="map"></div>
-  <header class="lg:fixed lg:w-full">
-    <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-      <div class="flex lg:flex-1 header-logo">
-        <img class="img_header" type="image/png" src="{{ asset('img/Logo_final_filament.png') }}" alt="Logo">
-        <span class="agro">Agro</span><span class="drive">Drive</span>
-      </div>
-      <div class="lg:hidden flex items-center justify-end">
-        <button id="menu-toggle" class="focus:outline-none">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
-        </button>
-      </div>
-      <div>
-      @guest
-        <div class="hidden lg:flex lg:gap-x-12">
-          <a href="/" class="a_header product text-sm font-semibold leading-6">Inicio</a>
-        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="/driver/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container">
+            <a class="navbar-brand h2" href="#">
+                <img src="{{ asset('img/Logo_final_filament.png') }}" height="60" alt="Logo">
+                <strong><span class="text-success">Agro</span><span class="text-dark">Drive</span></strong>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                @guest
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item h5">
+                        <a class="bi bi-houses-fill nav-link font-weight-bold" href="#">Inicio |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-person-vcard-fill nav-link font-weight-bold" href="#">Acerca de |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-telephone-outbound nav-link font-weight-bold" href="#contact">Contacto |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-shop nav-link font-weight-bold" href="#company">Compañía |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-person-circle nav-link font-weight-bold" href="/login-user">Iniciar sesión
+                            |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-taxi-front nav-link font-weight-bold" href="/driver/login">Soy
+                            Conductor</a>
+                    </li>
+                </ul>
+                @else
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item h5">
+                        <a class="bi bi-houses-fill nav-link font-weight-bold" href="#">Inicio |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-person-vcard-fill nav-link font-weight-bold" href="#">Acerca de |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-telephone-outbound nav-link font-weight-bold" href="#contact">Contacto
+                            |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-shop nav-link font-weight-bold" href="#company">Compañía |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a href="/inicioUser" class="bi nav-link font-weight-bold">Solicitar Servicio |</a>
+                    </li>
+                </ul>
+                <div class="dropdown">
+                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ Auth::user()->name }}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="#"><img src="{{ asset('img/user-default.png') }}"
+                                    alt="User Image" class="rounded-circle" width="30"> Perfil</a></li>
+                        <li><a class="dropdown-item" href="#">
+                                @php
+                                $ratings = Auth::user()->ratings;
+                                @endphp
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $ratings)
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    @else
+                                        <i class="bi bi-star text-warning"></i>
+                                    @endif
+                                @endfor
+                                {{ $ratings }}
+                            </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-danger">Cerrar sesión</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+                @endguest
+            </div>
         </div>
-      @else
-        <div class="hidden lg:flex lg:gap-x-12">
-          <span class="text-sm font-semibold leading-6">Bienvenido, {{ Auth::user()->name }}</span>
-        </div>
-        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="text-sm font-semibold leading-6 hover:uppercase">Cerrar sesión</button>
-          </form>
-        </div>
-      @endguest
     </nav>
-    <div id="menu" class="hidden lg:hidden">
-      <!-- Links para pantallas pequeñas -->
-      <div class="flex flex-col p-4 bg-gray-100">
-        @guest
-          <a href="#" class="a_header product text-sm font-semibold leading-6">Inicio</a>
-          <a href="#" class="a_header features text-sm font-semibold leading-6">Acerca de</a>
-          <a href="#contact" class="a_header marketplace text-sm font-semibold leading-6">Contacto</a>
-          <a href="#company" class="a_header company text-sm font-semibold leading-6">Compañía</a>
-          <a href="/login-user" class="login text-sm font-semibold leading-6 hover:uppercase">Iniciar sesión<span aria-hidden="true">&rarr;</span></a>
-          <a href="/admin/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
-        @else
-          <span class="text-sm font-semibold leading-6">Bienvenido, {{ Auth::user()->name }}</span>
-          <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="text-sm font-semibold leading-6 hover:uppercase">Cerrar sesión</button>
-          </form>
-        @endguest
+  </header>
+  <div class="main-content">
+    <div class="container login">
+     <div>
+       @livewire('logu')
       </div>
     </div>
-  </header>
-  
-  <main>
-    @livewire('logu')
-  </main>
-  <footer>
-    <p>&copy; 2024 AgroDrive. Todos los derechos reservados. Prohibida la reproducción total o parcial sin autorización.</p>
+  </div>
+  <footer class="text-center">
+    <div class="container">
+      <p class="mb-0">&copy; 2024 <a href="/admin/login">AgroDrive</a>. Todos los derechos reservados. Prohibida la reproducción total o parcial sin autorización.</p>
+    </div>
   </footer>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
     const map = L.map('map').setView([0, 0], 2);
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
@@ -233,10 +190,9 @@
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         function(position) {
-          const lat = position.coords.latitude;
-          const lng = position.coords.longitude;
-          map.setView([lat, lng], 13);
-          L.marker([lat, lng]).addTo(map).openPopup();
+          const userLocation = [position.coords.latitude, position.coords.longitude];
+          map.setView(userLocation, 13);
+          L.marker(userLocation).addTo(map).bindPopup("Estás aquí.").openPopup();
         },
         function() {
           alert('Error: El servicio de geolocalización ha fallado.');
@@ -245,8 +201,6 @@
     } else {
       alert('Error: Tu navegador no soporta geolocalización.');
     }
-
   </script>
-  @livewireScripts
 </body>
 </html>

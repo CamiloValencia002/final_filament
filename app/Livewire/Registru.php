@@ -33,7 +33,6 @@ class Registru extends Component
         'document' => 'required|string|unique:users,document',
         'role' => 'required|string',
         'ratings' => 'required|numeric|min:0|max:5',
-        // 'image' => 'nullable|image|max:1024', // 1MB Max
     ];
 
     public function register()
@@ -58,7 +57,6 @@ class Registru extends Component
             'document_verify' => false,
             'role' => 'CUSTOMER',
             'ratings' => 0,     
-            'image' => $imagePath,
         ]);
 
         session()->flash('message', 'Registro exitoso.');
