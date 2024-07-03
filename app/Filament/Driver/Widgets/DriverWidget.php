@@ -61,7 +61,7 @@ class DriverWidget extends BaseWidget
             )
                 ->description('Paquetes en estado "LIBRE"')
                 ->descriptionIcon('heroicon-o-truck', IconPosition::Before)
-                ->color('warning')
+                ->color('danger')
                 ->chart([0, 5, 10, 30, 60]),
         ];
     }
