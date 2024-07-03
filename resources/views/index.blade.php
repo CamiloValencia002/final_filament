@@ -143,27 +143,27 @@
     <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" style="width: 1000px; margin: 0 auto;">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="{{ asset('img/logo_rectangulo.png') }}" class="d-block mx-auto mb-4" style="width: 1000px; height: 500px; object-fit: cover; border-radius: 10px;" alt="About Me">
-            </div>
-            <div class="carousel-item">
-              <img src="{{ asset('img/carousel1.png') }}" class="d-block mx-auto mb-4" style="width: 1000px; height: 500px; object-fit: cover; border-radius: 10px;" alt="Carousel 1">
-            </div>
-            <div class="carousel-item">
-              <img src="{{ asset('img/carousel2.jpeg') }}" class="d-block mx-auto mb-4" style="width: 1000px; height: 500px; object-fit: cover; border-radius: 10px;" alt="Carousel 2">
-            </div>
-          </div>
-          <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev" style="z-index: 1;">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </a>
-          <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next" style="z-index: 1;">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </a>       
-        </div>
+      <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{{ asset('img/logo_rectangulo.png') }}" class="d-block mx-auto mb-4 img-fluid" style="width: 1000px; height: 500px; object-fit: cover;" alt="About Me">
+    </div>
+    <div class="carousel-item">
+      <img src="{{ asset('img/carousel1.png') }}" class="d-block mx-auto mb-4 img-fluid" style="width: 1000px; height: 500px; object-fit: cover;" alt="Carousel 1">
+    </div>
+    <div class="carousel-item">
+      <img src="{{ asset('img/carousel2.jpeg') }}" class="d-block mx-auto mb-4 img-fluid" style="width: 1000px; height: 500px; object-fit: cover;" alt="Carousel 2">
+    </div>
+  </div>
+  <a class="carousel-control-prev" href="#myCarousel" role="button" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#myCarousel" role="button" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </a>       
+</div>
         <ul class="list-unstyled">
           <li><span class="bi bi-envelope-plus-fill h1 text-success me-3"></span> <strong class="h3">Solicitud de Servicio</strong></li>
           <li><span class="bi bi-car-front-fill h1 text-success me-3"></span> <strong class="h3">Asignación de Conductores</strong></li>
