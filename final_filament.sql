@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-06-2024 a las 08:28:51
+-- Tiempo de generación: 03-07-2024 a las 08:18:32
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -199,11 +199,13 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `ratings` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `id_driver` bigint(20) UNSIGNED NOT NULL,
-  `id_customer` bigint(20) UNSIGNED NOT NULL,
-  `id_package` bigint(20) UNSIGNED NOT NULL,
-  `ratings` double(8,2) NOT NULL,
-  `comment` varchar(255) NOT NULL,
+  `id_driver` bigint(20) UNSIGNED DEFAULT NULL,
+  `id_customer` bigint(20) UNSIGNED DEFAULT NULL,
+  `id_package` bigint(20) UNSIGNED DEFAULT NULL,
+  `rating_driver` double DEFAULT NULL,
+  `rating_customer` double DEFAULT NULL,
+  `comment_driver` text DEFAULT NULL,
+  `comment_customer` text DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
