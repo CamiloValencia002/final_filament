@@ -17,18 +17,38 @@
                     <li class="nav-item h5">
                         <a class="bi bi-houses-fill nav-link font-weight-bold" href="/">Inicio |</a>
                     </li>
-                    <li class="nav-item h5">
-                        <a class="bi bi-truck nav-link font-weight-bold" href="#travel">Mis viajes |</a>
-                    </li>
+                   
                 </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item h5">
-                        <form method="POST" action="{{ route('logout') }}" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-success font-weight-bold">Cerrar sesión</button>
-                        </form>
-                    </li>
-                </ul>
+              
+                <div class="dropdown">
+                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        {{ Auth::user()->name }}
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                        <li class="dropdown-item">{{ Auth::user()->email }}</li>
+                        <li><a class="dropdown-item" href="#">
+                                @php
+                                $ratings = Auth::user()->ratings;
+                                @endphp
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <= $ratings)
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                    @else
+                                        <i class="bi bi-star text-warning"></i>
+                                    @endif
+                                @endfor
+                                {{ $ratings }}
+                            </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item text-danger">Cerrar sesión</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </nav>
