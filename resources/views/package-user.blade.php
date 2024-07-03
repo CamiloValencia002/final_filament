@@ -113,17 +113,7 @@
                 @else
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item h5">
-                        <a class="bi bi-houses-fill nav-link font-weight-bold" href="#">Inicio |</a>
-                    </li>
-                    <li class="nav-item h5">
-                        <a class="bi bi-person-vcard-fill nav-link font-weight-bold" href="#">Acerca de |</a>
-                    </li>
-                    <li class="nav-item h5">
-                        <a class="bi bi-telephone-outbound nav-link font-weight-bold" href="#contact">Contacto
-                            |</a>
-                    </li>
-                    <li class="nav-item h5">
-                        <a class="bi bi-shop nav-link font-weight-bold" href="#company">Compañía |</a>
+                        <a class="bi bi-houses-fill nav-link font-weight-bold" href="/">Inicio |</a>
                     </li>
                     <li class="nav-item h5">
                         <a href="/inicioUser" class="bi nav-link font-weight-bold">Solicitar Servicio |</a>

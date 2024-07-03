@@ -47,11 +47,17 @@
                   <td>{{ $package->comment }}</td>
                   <td>{{ $package->created_at }}</td>
                   <td>
-                    @if($package->state == 'FINALIZADO' && !$package->rating_customer)
-                    <a href="{{ route('rate', $package->id) }}" class="btn btn-primary btn-sm">
+                    @php
+                      $rating = \App\Models\Rating::where('id_package', $package->id)
+                                                  ->where('id_customer', auth()->id())
+                                                  ->first();
+                    @endphp
+                  
+                    @if($package->state == 'FINALIZADO' && (!$rating || $rating->rating_customer === null))
+                      <a href="{{ route('rate', $package->id) }}" class="btn btn-primary btn-sm">
                         Calificar
-                    </a>
-                    @elseif($package->rating_customer)
+                      </a>
+                    @elseif($rating && $rating->rating_customer !== null)
                       <span class="text-success">Calificado</span>
                     @endif
                   </td>
