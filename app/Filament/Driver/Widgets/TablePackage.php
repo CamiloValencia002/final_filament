@@ -21,18 +21,9 @@ class TablePackage extends BaseWidget
         return $table
             ->query(Package::query()->where('state', 'LIBRE'))
             ->columns([
-                Tables\Columns\TextColumn::make('id_customer')
-                    ->label('ID del Cliente')
-                    ->numeric()
-                    ->sortable(),
+             
                 Tables\Columns\TextColumn::make('carge_type')
                     ->label('Tipo de Carga')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('size')
-                    ->label('Tamaño')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('weight')
-                    ->label('Peso')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('point_initial')
                     ->label('Punto de Inicio')
@@ -40,9 +31,7 @@ class TablePackage extends BaseWidget
                 Tables\Columns\TextColumn::make('point_finally')
                     ->label('Punto Final')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->label('Descripción')
-                    ->searchable(),
+         
                 Tables\Columns\TextColumn::make('price')
                     ->label('Precio')
                     ->money()
@@ -50,9 +39,7 @@ class TablePackage extends BaseWidget
                 Tables\Columns\TextColumn::make('comment')
                     ->label('Comentario')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('state')
-                    ->label('Estado')
-                    ->searchable(),
+        
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Creado el')
                     ->dateTime()

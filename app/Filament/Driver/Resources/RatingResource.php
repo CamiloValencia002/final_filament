@@ -49,9 +49,7 @@ class RatingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('package.id')
-                ->label('ID del paquete')
-                ->searchable(),
+         
                 Tables\Columns\TextColumn::make('package.carge_type')
                     ->label('Tipo de Carga')
                     ->searchable(),
