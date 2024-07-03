@@ -150,9 +150,10 @@
   <header>
     <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
       <div class="flex lg:flex-1 header-logo">
-          <img class="img_header" type="image/png" src="{{ asset('img/Logo_final_filament.png') }}" alt="Logo">
-          <span class="agro">Agro</span><span class="drive">Drive</span>
+        <img class="img_header" type="image/png" src="{{ asset('img/Logo_final_filament.png') }}" alt="Logo">
+        <span class="agro">Agro</span><span class="drive">Drive</span>
       </div>
+      
       <div class="flex lg:hidden">
         <button id="menu-button" class="text-gray-500 hover:text-gray-900 focus:outline-none focus:text-gray-900">
           <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -160,26 +161,51 @@
           </svg>
         </button>
       </div>
-      <div class="hidden lg:flex lg:gap-x-12 menu-links">
-        <a href="#" class="a_header product text-sm font-semibold leading-6">Inicio</a>
-        <a href="#" class="a_header features text-sm font-semibold leading-6">Acerca de</a>
-        <a href="#contact" class="a_header marketplace text-sm font-semibold leading-6">Contacto</a>
-        <a href="#company" class="a_header company text-sm font-semibold leading-6">Compañía</a>
+      
+      <div class="hidden lg:flex lg:flex-1 lg:justify-center lg:gap-x-12">
+        @guest
+          <a href="#" class="a_header text-sm font-semibold leading-6">Inicio</a>
+          <a href="#" class="a_header text-sm font-semibold leading-6">Acerca de</a>
+          <a href="#contact" class="a_header text-sm font-semibold leading-6">Contacto</a>
+          <a href="#company" class="a_header text-sm font-semibold leading-6">Compañía</a>
+        @else
+          <a href="#" class="a_header text-sm font-semibold leading-6">Inicio</a>
+          <a href="#" class="a_header text-sm font-semibold leading-6">Acerca de</a>
+          <a href="#contact" class="a_header text-sm font-semibold leading-6">Contacto</a>
+          <a href="#company" class="a_header text-sm font-semibold leading-6">Compañía</a>
+          <a href="/inicioUser" class="a_header text-sm font-semibold leading-6">Solicitar servicio</a>
+        @endguest
       </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end menu-links">
-        <a href="/login-user" class="login text-sm font-semibold leading-6 hover:uppercase">Iniciar sesión<span aria-hidden="true">&rarr;</span></a>
-      </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end menu-links">
-        <a href="/driver/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
+  
+      <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-6">
+        @guest
+          <a href="/login-user" class="login text-sm font-semibold leading-6 hover:uppercase">Iniciar sesión</a>
+          <a href="/driver/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor</a>
+        @else
+          <span class="text-sm font-semibold leading-6">Bienvenido {{ Auth::user()->name }}</span>
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="text-sm font-semibold leading-6 hover:uppercase">Cerrar sesión</button>
+          </form>
+        @endguest
       </div>
     </nav>
+  
     <div id="mobile-menu" class="hidden lg:hidden">
-      <a href="#" class="block a_header product text-sm font-semibold leading-6 p-2">Inicio</a>
-      <a href="#" class="block a_header features text-sm font-semibold leading-6 p-2">Acerca de</a>
-      <a href="#contact" class="block a_header marketplace text-sm font-semibold leading-6 p-2">Contacto</a>
-      <a href="#company" class="block a_header company text-sm font-semibold leading-6 p-2">Compañía</a>
-      <a href="/login-user" class="block login text-sm font-semibold leading-6 p-2 hover:uppercase">Iniciar sesión<span aria-hidden="true">&rarr;</span></a>
-      <a href="/admin/login" class="block login text-sm font-semibold leading-6 p-2 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
+      <a href="#" class="block a_header text-sm font-semibold leading-6 p-2">Inicio</a>
+      <a href="#" class="block a_header text-sm font-semibold leading-6 p-2">Acerca de</a>
+      <a href="#contact" class="block a_header text-sm font-semibold leading-6 p-2">Contacto</a>
+      <a href="#company" class="block a_header text-sm font-semibold leading-6 p-2">Compañía</a>
+      @guest
+        <a href="/login-user" class="block login text-sm font-semibold leading-6 p-2 hover:uppercase">Iniciar sesión</a>
+        <a href="/driver/login" class="block login text-sm font-semibold leading-6 p-2 hover:uppercase">Soy conductor</a>
+      @else
+        <a href="/inicioUser" class="block a_header text-sm font-semibold leading-6 p-2">Solicitar servicio</a>
+        <form method="POST" action="{{ route('logout') }}">
+          @csrf
+          <button type="submit" class="block w-full text-left text-sm font-semibold leading-6 p-2 hover:uppercase">Cerrar sesión</button>
+        </form>
+      @endguest
     </div>
   </header>
   <main>

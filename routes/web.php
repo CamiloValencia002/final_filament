@@ -8,13 +8,23 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/inicioUser', function () {
-    return view('layouts.app');
-})->name('inicioUser');
+
 
 Route::get('login-user', function () {
     return view('login-user');
 })->name('login-user');
+
+// VALIDACIÓN DE LOGIN (SI NO ESTÁ LOGEADO NO PERMTIE INGRESAR)//
+Route::middleware(['auth'])->group(function () {
+    Route::get('/inicioUser', function () {
+        return view('layouts.app');
+    })->name('inicioUser');
+});
+//RUTA PARA EL LOGOUT//
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/login-user');
+})->name('logout');
 
 Route::get('/login', Logu::class);
 
@@ -29,9 +39,6 @@ Route::get('register-user', function () {
     return view('register-user');
 })->name('register-user');
 
-Route::get('/test-log', function() {
-    Log::info('Este es un log de prueba.');
-    return 'Revisa el log';
-});
+
 
 

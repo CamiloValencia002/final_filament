@@ -12,14 +12,20 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Inicio</a>
+                        <a>Bienvenido, {{ Auth::user()->name }}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#travel">Mis viajes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="">Cerrar sesión</a>
-                    </li>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button class="nav-link" >Cerrar sesión</button>
+                        </form>                
+                    </li>          
                 </ul>
             </div>
             
