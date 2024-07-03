@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
 <head>
@@ -176,28 +177,42 @@
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
         </button>
       </div>
-      <div class="hidden lg:flex lg:gap-x-12">
-        <a href="#" class="a_header product text-sm font-semibold leading-6">Inicio</a>
-        <a href="#" class="a_header features text-sm font-semibold leading-6">Acerca de</a>
-        <a href="#contact" class="a_header marketplace text-sm font-semibold leading-6">Contacto</a>
-        <a href="#company" class="a_header company text-sm font-semibold leading-6">Compañía</a>
-      </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="/test-log" class="login text-sm font-semibold leading-6 hover:uppercase">Iniciar sesión<span aria-hidden="true">&rarr;</span></a>
-      </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-        <a href="/driver/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
-      </div>
+      <div>
+      @guest
+        <div class="hidden lg:flex lg:gap-x-12">
+          <a href="/" class="a_header product text-sm font-semibold leading-6">Inicio</a>
+        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+          <a href="/driver/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
+        </div>
+      @else
+        <div class="hidden lg:flex lg:gap-x-12">
+          <span class="text-sm font-semibold leading-6">Bienvenido, {{ Auth::user()->name }}</span>
+        </div>
+        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="text-sm font-semibold leading-6 hover:uppercase">Cerrar sesión</button>
+          </form>
+        </div>
+      @endguest
     </nav>
     <div id="menu" class="hidden lg:hidden">
       <!-- Links para pantallas pequeñas -->
       <div class="flex flex-col p-4 bg-gray-100">
-        <a href="#" class="a_header product text-sm font-semibold leading-6">Inicio</a>
-        <a href="#" class="a_header features text-sm font-semibold leading-6">Acerca de</a>
-        <a href="#contact" class="a_header marketplace text-sm font-semibold leading-6">Contacto</a>
-        <a href="#company" class="a_header company text-sm font-semibold leading-6">Compañía</a>
-        <a href="/login-user" class="login text-sm font-semibold leading-6 hover:uppercase">Iniciar sesión<span aria-hidden="true">&rarr;</span></a>
-        <a href="/admin/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
+        @guest
+          <a href="#" class="a_header product text-sm font-semibold leading-6">Inicio</a>
+          <a href="#" class="a_header features text-sm font-semibold leading-6">Acerca de</a>
+          <a href="#contact" class="a_header marketplace text-sm font-semibold leading-6">Contacto</a>
+          <a href="#company" class="a_header company text-sm font-semibold leading-6">Compañía</a>
+          <a href="/login-user" class="login text-sm font-semibold leading-6 hover:uppercase">Iniciar sesión<span aria-hidden="true">&rarr;</span></a>
+          <a href="/admin/login" class="login text-sm font-semibold leading-6 hover:uppercase">Soy conductor<span aria-hidden="true">&rarr;</span></a>
+        @else
+          <span class="text-sm font-semibold leading-6">Bienvenido, {{ Auth::user()->name }}</span>
+          <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="text-sm font-semibold leading-6 hover:uppercase">Cerrar sesión</button>
+          </form>
+        @endguest
       </div>
     </div>
   </header>
