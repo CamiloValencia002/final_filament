@@ -66,24 +66,11 @@
 <body>
     <div id="map"></div>
 
-    <!-- Encabezado -->
-    <header id="header">
-        @include('layouts.header')
-    </header>
-
-    <!-- Contenido principal -->
     <div class="content">
         <div class="container">
-            @include('layouts.dashboard')
+            @yield('content')
         </div>
     </div>
-
-    <!-- Pie de página -->
-    <footer class="bg-light py-3 text-center ml-5 mr-5 rounded-5">
-        <div class="container">
-            <p class="font-weight-bold">&copy; 2024 <a href="/admin/login">AgroDrive</a>. Todos los derechos reservados. Prohibida la reproducción total o parcial sin autorización.</p>
-        </div>
-    </footer>
 
     <!-- Scripts JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -18,6 +18,7 @@
           <table class="table table-bordered">
             <thead>
               <tr>
+                <th>Estado</th>
                 <th>ID</th>
                 <th>Tipo de Carga</th>
                 <th>Descripción</th>
@@ -34,6 +35,7 @@
             <tbody>
               @foreach($packages as $package)
                 <tr>
+                  <td>{{ $package->state }}</td>
                   <td>{{ $package->id }}</td>
                   <td>{{ $package->carge_type }}</td>
                   <td>{{ $package->description }}</td>
@@ -46,7 +48,7 @@
                   <td>{{ $package->created_at }}</td>
                   <td>
                     @if($package->state == 'FINALIZADO' && !$package->rating_customer)
-                    <a href="{{ route('packages.rate', $package->id) }}" class="btn btn-primary btn-sm">
+                    <a href="{{ route('rate', $package->id) }}" class="btn btn-primary btn-sm">
                         Calificar
                     </a>
                     @elseif($package->rating_customer)
@@ -63,7 +65,6 @@
       </div>
     </div>
   </div>
-
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>

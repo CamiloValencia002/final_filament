@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('point_initial');
             $table->string('point_finally');
             $table->string('description')->nullable();
-            $table->boolean('price');
+            $table->double('price');
             $table->string('comment')->nullable();
             $table->string('image')->nullable();
             $table->string('state')->nullable();

@@ -50,4 +50,6 @@ Route::get('package-user', function () {
 Route::get('/packages', ShowPackageUser::class)->name('packages.index');
 Route::get('/packages/{packageId}/rate', RatePackage::class)->name('packages.rate');
 
-
+Route::get('rate/{packageId}', function ($packageId) {
+    return view('rate', ['packageId' => $packageId]);
+})->name('rate');

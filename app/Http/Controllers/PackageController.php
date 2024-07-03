@@ -48,6 +48,6 @@ class PackageController extends Controller
                <p>Por favor espera que un conductor tome tu solicitud.</p>')
         ->showConfirmButton('Entendido', '#3085d6');
         // Redirigir a una página de confirmación u otra vista
-        return redirect()->route('pedido');
+        return redirect()->route('package-user');
     }
 }
