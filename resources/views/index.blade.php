@@ -110,8 +110,7 @@
                         {{ Auth::user()->name }}
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#"><img src="{{ asset('img/user-default.png') }}"
-                                    alt="User Image" class="rounded-circle" width="30"> Perfil</a></li>
+                        <li class="dropdown-item">{{ Auth::user()->email }}</li>
                         <li><a class="dropdown-item" href="#">
                                 @php
                                 $ratings = Auth::user()->ratings;
