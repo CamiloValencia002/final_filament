@@ -20,25 +20,4 @@
             <p><span class="font-medium">Teléfono:</span> {{ $customer->phone }}</p>
         </div>
     </div>
-    
-    @if($package->ratings)
-    <div class="mt-4">
-        <h3 class="text-lg font-semibold mb-2">Calificación</h3>
-        <div class="flex items-center">
-            <span class="text-yellow-400">
-                @for($i = 1; $i <= 5; $i++)
-                    @if($i <= $package->ratings)
-                        ★
-                    @else
-                        ☆
-                    @endif
-                @endfor
-            </span>
-            <span class="ml-2">{{ $package->ratings }} / 5</span>
-        </div>
-        @if($package->comment)
-            <p class="mt-2"><span class="font-medium">Comentario:</span> {{ $package->comment }}</p>
-        @endif
-    </div>
-    @endif
 </div>
