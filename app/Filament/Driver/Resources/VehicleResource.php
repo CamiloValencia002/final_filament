@@ -28,48 +28,61 @@ class VehicleResource extends Resource
         return parent::getEloquentQuery()->where('id_driver', Auth::id());
     }
 
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\Card::make()
-                    ->schema([
-                        FileUpload::make('vehicle_photo')
-                            ->label('Imagen del vehículo')
-                            ->image()
-                            ->imageEditor()
-                            ->directory('vehicles')
-                            ->visibility('public')
-                            ->columnSpan(2),
-                        Forms\Components\TextInput::make('capacity')
-                            ->required()
-                            ->label('Capacidad')
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('dimension')
-                            ->required()
-                            ->label('Dimensiones')
-                            ->maxLength(255),
-                        Forms\Components\Select::make('type')
-                            ->required()
-                            ->label('Tipo')
-                            ->options([
-                                'Camión' => 'Camión',
-                                'Furgoneta' => 'Furgoneta',
-                                'Camioneta' => 'Camioneta',
-                                'Otro' => 'Otro',
-                            ]),
-                        Forms\Components\Toggle::make('photo_soat')
-                            ->label('SOAT')
-                            ->required()
-                            ->disabled(),
-                        Forms\Components\Toggle::make('photo_tecnomecanic')
-                            ->label('Tecnicomecánica')
-                            ->required()
-                            ->disabled(),
-                    ])
-                    ->columns(2)
-            ]);
-    }
+public static function form(Form $form): Form
+{
+    return $form
+        ->schema([
+            Forms\Components\Card::make()
+                ->schema([
+                    // Información básica del vehículo
+                    Forms\Components\Section::make('Información del vehículo')
+                        ->schema([
+                            Forms\Components\Select::make('type')
+                                ->required()
+                                ->label('Tipo')
+                                ->options([
+                                    'Camión' => 'Camión',
+                                    'Furgoneta' => 'Furgoneta',
+                                    'Camioneta' => 'Camioneta',
+                                    'Otro' => 'Otro',
+                                ]),
+                            Forms\Components\TextInput::make('capacity')
+                                ->required()
+                                ->label('Capacidad')
+                                ->maxLength(255),
+                            Forms\Components\TextInput::make('dimension')
+                                ->required()
+                                ->label('Dimensiones')
+                                ->maxLength(255),
+                        ])
+                        ->columns(2),
+
+                    // Documentación
+                    Forms\Components\Section::make('Documentación')
+                        ->schema([
+                            Forms\Components\Toggle::make('photo_soat')
+                                ->label('SOAT')
+                                ->required(),
+                            Forms\Components\Toggle::make('photo_tecnomecanic')
+                                ->label('Tecnicomecánica')
+                                ->required(),
+                        ])
+                        ->columns(2),
+
+                    // Foto del vehículo
+                    Forms\Components\Section::make('Foto del vehículo')
+                        ->schema([
+                            FileUpload::make('vehicle_photo')
+                                ->label('Imagen del vehículo')
+                                ->image()
+                                ->imageEditor()
+                                ->directory('vehicles')
+                                ->visibility('public')
+                                ->columnSpan(2),
+                        ]),
+                ])
+        ]);
+}
 
     public static function table(Table $table): Table
     {
