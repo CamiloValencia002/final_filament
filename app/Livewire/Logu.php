@@ -26,7 +26,6 @@ class Logu extends Component
             'email' => 'required|email',    
             'password' => 'required|min:8',
         ]);
-
         Log::info('Datos validados', ['email' => $this->email, 'password' => $this->password]);
 
         if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {

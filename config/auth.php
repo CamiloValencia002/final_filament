@@ -26,6 +26,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Driver::class,
         ],
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Customer::class,
+        ],
     ],
 
     'passwords' => [

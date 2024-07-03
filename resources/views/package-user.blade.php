@@ -7,7 +7,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <style>
     html, body {
       height: 100%;
@@ -93,6 +93,15 @@
                         <a class="bi bi-houses-fill nav-link font-weight-bold" href="#">Inicio |</a>
                     </li>
                     <li class="nav-item h5">
+                        <a class="bi bi-person-vcard-fill nav-link font-weight-bold" href="#">Acerca de |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-telephone-outbound nav-link font-weight-bold" href="#contact">Contacto |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-shop nav-link font-weight-bold" href="#company">Compañía |</a>
+                    </li>
+                    <li class="nav-item h5">
                         <a class="bi bi-person-circle nav-link font-weight-bold" href="/login-user">Iniciar sesión
                             |</a>
                     </li>
@@ -107,63 +116,58 @@
                         <a class="bi bi-houses-fill nav-link font-weight-bold" href="#">Inicio |</a>
                     </li>
                     <li class="nav-item h5">
+                        <a class="bi bi-person-vcard-fill nav-link font-weight-bold" href="#">Acerca de |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-telephone-outbound nav-link font-weight-bold" href="#contact">Contacto
+                            |</a>
+                    </li>
+                    <li class="nav-item h5">
+                        <a class="bi bi-shop nav-link font-weight-bold" href="#company">Compañía |</a>
+                    </li>
+                    <li class="nav-item h5">
                         <a href="/inicioUser" class="bi nav-link font-weight-bold">Solicitar Servicio |</a>
-                    </li>                 
+                    </li>
                 </ul>
                 <div class="dropdown">
-                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ Auth::user()->name }}
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                        <li><a class="dropdown-item" href="#"><img src="{{ asset('img/user-default.png') }}"
-                                    alt="User Image" class="rounded-circle" width="30"> Perfil</a></li>
-                        <li><a class="dropdown-item" href="#">
-                                @php
-                                $ratings = Auth::user()->ratings;
-                                @endphp
-                                @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= $ratings)
-                                        <i class="bi bi-star-fill text-warning"></i>
-                                    @else
-                                        <i class="bi bi-star text-warning"></i>
-                                    @endif
-                                @endfor
-                                {{ $ratings }}
-                            </a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="dropdown-item text-danger">Cerrar sesión</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
+                  <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                      {{ Auth::user()->name }}
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                      <li><a class="dropdown-item" href="#">
+                          @php
+                          $ratings = Auth::user()->ratings;
+                          @endphp
+                          @for ($i = 1; $i <= 5; $i++)
+                              @if ($i <= $ratings)
+                                  <i class="bi bi-star-fill text-warning"></i>
+                              @else
+                                  <i class="bi bi-star text-warning"></i>
+                              @endif
+                          @endfor
+                          {{ $ratings }}
+                      </a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li>
+                          <form method="POST" action="{{ route('logout') }}">
+                              @csrf
+                              <button type="submit" class="dropdown-item text-danger">Cerrar sesión</button>
+                          </form>
+                      </li>
+                  </ul>
+              </div>
                 @endguest
             </div>
         </div>
     </nav>
   </header>
-  @guest
   <div class="main-content">
     <div class="container login">
      <div>
-       @livewire('logu')
-      </div>
+       @livewire('show-package-user')
+      </div> 
     </div>
   </div>
-  @else
-  <div class="main-content">
-    <div class="container login">
-     <div>
-      <h1>YA ESTÁS LOGEADO</h1>
-      </div>
-    </div>
-  </div>
-  
-  @endguest
-  
   <footer class="text-center">
     <div class="container">
       <p class="mb-0">&copy; 2024 <a href="/admin/login">AgroDrive</a>. Todos los derechos reservados. Prohibida la reproducción total o parcial sin autorización.</p>
@@ -195,5 +199,6 @@
       alert('Error: Tu navegador no soporta geolocalización.');
     }
   </script>
+  @include('sweetalert::alert')
 </body>
 </html>

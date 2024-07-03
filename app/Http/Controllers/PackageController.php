@@ -40,10 +40,14 @@ class PackageController extends Controller
         $package->save();
 
         // Mostrar una alerta SweetAlert de éxito
-        Alert::success('¡Solicitud de paquete enviada correctamente por favor espere que un conductor tome su solicitud', 'Éxito')
-        ->html('<img src="https://media.giphy.com/media/ABTf2j4Sn9NiqYDhXT/giphy.gif" style="width: 100px; height: 100px;"> <p>Por favor, espera a que un conductor tome tu solicitud.</p>')
+        Alert::success('¡Solicitud de paquete enviada correctamente!', 'Éxito')
+        ->html('<video width="200" height="150" autoplay loop>
+                  <source src="' . asset('img/camion.mp4') . '" type="video/mp4">
+                  Tu navegador no soporta el elemento de video.
+               </video>
+               <p>Por favor espera que un conductor tome tu solicitud.</p>')
         ->showConfirmButton('Entendido', '#3085d6');
         // Redirigir a una página de confirmación u otra vista
-        return redirect()->route('inicioUser');
+        return redirect()->route('pedido');
     }
 }
