@@ -1,8 +1,8 @@
 <!-- Contenido específico del dashboard -->
 <div class="container mt-5 mb-5">
-    <div class="card mx-auto">
+    <div class="card mx-auto shadow">
         <div class="card-body">
-            <h2 class="card-title text-center mb-4">Solicitud</h2>
+            <h2 class="card-title text-center mb-4">Nueva Solicitud de Transporte</h2>
             <form action="{{ route('procesar.formulario') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
@@ -19,15 +19,10 @@
                             <label for="weight" class="form-label">Peso</label>
                             <input type="text" class="form-control" id="weight" name="weight" required>
                         </div>
-
                         <div class="mb-3">
                             <label for="comment" class="form-label">Comentario</label>
-                            <input type="text" class="form-control" id="comment" name="comment">
+                            <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
                         </div>
-                       {{--  <div class="mb-3">
-                            <label for="image" class="form-label">Imagen del paquete</label>
-                            <input type="file" class="form-control" id="image" name="image" required>
-                        </div> --}}
                     </div>
                     <div class="col-md-6 mb-4">
                         <div class="mb-3">
@@ -40,18 +35,20 @@
                         </div>
                         <div class="mb-3">
                             <label for="description" class="form-label">Descripción</label>
-                            <input type="text" class="form-control" id="description" name="description">
+                            <textarea class="form-control" id="description" name="description" rows="3"></textarea>
                         </div>
                         <div class="mb-3">
                             <label for="price" class="form-label">Precio</label>
-                            <input type="text" class="form-control" id="price" name="price" required>
+                            <div class="input-group">
+                                <span class="input-group-text">$</span>
+                                <input type="number" class="form-control" id="price" name="price" required>
+                            </div>
                         </div>
-                        
                     </div>
                 </div>
-                <div class="row mt-5">
+                <div class="row mt-4">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-success w-100">Hacer solicitud</button>
+                        <button type="submit" class="btn btn-success btn-lg w-100">Enviar Solicitud</button>
                     </div>
                 </div>
             </form>

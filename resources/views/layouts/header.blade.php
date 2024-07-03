@@ -1,34 +1,33 @@
 <!-- resources/views/layouts/header.blade.php -->
-<header class="fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light bg-opacity-75">
+<header>
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-            <a class="navbar-brand header-logo" href="#">
-                <img src="{{ asset('img/Logo_final_filament.png') }}" alt="Logo" height="40" class="d-inline-block align-top me-2">
-                <span class="agro">Agro</span><span class="drive">Drive</span>
+            <a class="navbar-brand h2" href="#">
+                <img src="{{ asset('img/Logo_final_filament.png') }}" height="60" alt="Logo">
+                <strong><span class="text-success">Agro</span><span class="text-dark">Drive</span></strong>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a>Bienvenido, {{ Auth::user()->name }}</a>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item h5">
+                        <span class="bi nav-link font-weight-bold">Bienvenido, {{ Auth::user()->name }} |</span>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Inicio</a>
+                    <li class="nav-item h5">
+                        <a class="bi bi-houses-fill nav-link font-weight-bold" href="/">Inicio |</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#travel">Mis viajes</a>
+                    <li class="nav-item h5">
+                        <a class="bi bi-truck nav-link font-weight-bold" href="#travel">Mis viajes |</a>
                     </li>
-                    <li class="nav-item">
-                        <form method="POST" action="{{ route('logout') }}">
+                    <li class="nav-item h5">
+                        <form method="POST" action="{{ route('logout') }}" class="d-inline">
                             @csrf
-                            <button class="nav-link" >Cerrar sesión</button>
-                        </form>                
-                    </li>          
+                            <button type="submit" class="btn btn-success font-weight-bold">Cerrar sesión</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
-            
         </div>
     </nav>
 </header>

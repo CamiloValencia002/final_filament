@@ -61,6 +61,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
+          @guest
           <ul class="navbar-nav ml-auto">
             <li class="nav-item h5">
               <a class="bi bi-houses-fill nav-link font-weight-bold" href="#">Inicio |</a>
@@ -81,13 +82,39 @@
               <a class=" bi bi-taxi-front nav-link font-weight-bold" href="/driver/login">Soy Conductor</a>
             </li>
           </ul>
-          
+          @else
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item h5">
+              <a class="bi bi-houses-fill nav-link font-weight-bold" href="#">Inicio |</a>
+            </li>
+            <li class="nav-item h5">
+              <a class="bi bi-person-vcard-fill nav-link font-weight-bold" href="#">Acerca de |</a>
+            </li>
+            <li class="nav-item h5">
+              <a class="bi bi-telephone-outbound nav-link font-weight-bold" href="#contact">Contacto |</a>
+            </li>
+            <li class="nav-item h5">
+              <a class="bi bi-shop nav-link font-weight-bold" href="#company">Compañía |</a>
+            </li>
+            <li class="nav-item h5">
+              <a class="bi nav-link font-weight-bold">Bienvenido, {{ Auth::user()->name }} |</a>
+            </li>
+            <li class="nav-item h5">
+              <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn btn-success font-weight-bold">Cerrar sesión</button>
+              </form>
+            </li>
+            <li class="nav-item h5">
+              <a href="/inicioUser" class="bi nav-link font-weight-bold">Solicitar Servicio |</a>
+            </li>
+          </ul>
+          @endguest
         </div>
       </div>
     </nav>
   </header>
   <main class="container mt-5 pt-5">
-
   <section class="content-box text-center my-5">
   <div class="container">
     <div class="row">
@@ -111,8 +138,7 @@
           <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next" style="z-index: 1;">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
-          </a>
-          
+          </a>       
         </div>
         <ul class="list-unstyled">
           <li><span class="bi bi-envelope-plus-fill h1 text-success mr-3"></span> <strong class="h3">Solicitud de Servicio</strong></li>
@@ -120,11 +146,9 @@
           <li><span class="bi bi-shield-fill-check h1 text-success mr-3"></span><strong class="h3">Transporte Seguro</strong></li>
         </ul>
       </div>
-
     </div>
   </div>
 </section>
-
 <section id="contact" class="content-box my-5">
   <h2 class="text-center font-weight-bold mb-4">Contáctenos</h2>
   <div class="row justify-content-center">
@@ -145,8 +169,6 @@
     </div>
   </div>
 </section>
-
-
     <section id="company" class="content-box my-5">
       <h2 class="text-center font-weight-bold mb-4">Compañía</h2>
       <div class="row justify-content-center">
@@ -172,20 +194,16 @@
         </div>
       </div>
     </section>
-
   </main>
-
   <footer class="bg-light py-3 text-center ml-5 mr-5 rounded-5">
     <div class="container">
       <p class="font-weight-bold">&copy; 2024 <a href="/admin/login">AgroDrive</a>. Todos los derechos reservados. Prohibida la reproducción total o parcial sin autorización.</p>
     </div>
   </footer>
-
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
   <script>
     const map = L.map('map').setView([0, 0], 2);
 

@@ -9,20 +9,18 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <!-- Estilos CSS personalizados -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
     <style>
         html, body {
             height: 100%;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
         }
 
         body {
-            background: rgba(151, 167, 153, 0.8);
+            display: flex;
+            flex-direction: column;
+            background-color: #f8f9fa;
             color: #4a4a4a;
-            overflow-x: hidden;
         }
 
         #map {
@@ -34,98 +32,33 @@
             z-index: -1;
         }
 
-        .header-logo .agro {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: bold;
-            color: #2c6e49;
-        }
-
-        .header-logo .drive {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: bold;
-            color: #4a4a4a;
-        }
-
-        .navbar {
-            background-color: rgba(92, 151, 94, 0.8) !important;
-            height: 100px;
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            transition: top 0.3s ease-in-out;
-        }
-
-        .navbar.fixed {
-            top: -100px; /* Altura del navbar cuando se desplaza arriba */
-        }
-
-        .navbar .nav-link {
-            color: #fff;
-        }
-
-        .navbar .btn {
-            background-color: #2c6e49;
-            border-color: #2c6e49;
-        }
-
-        .navbar .btn:hover {
-            background-color: #255c3d;
-            border-color: #255c3d;
-        }
-
-        .card {
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-            margin-bottom: 20px;
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        @media (min-width: 768px) {
-            .card {
-                width: calc(50% - 20px);
-                margin-right: 20px;
-            }
-
-            .card:nth-child(2n) {
-                margin-right: 0;
-            }
-        }
-
         .content {
-            background-color: transparent;
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .section {
-            width: 100%;
-            max-width: 1100px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-            margin-bottom: 20px;
-            padding: 20px;
+            padding-top: 80px; /* Ajusta esto según la altura de tu navbar */
+            padding-bottom: 60px; /* Ajusta esto según la altura de tu footer */
         }
 
         .footer {
-            background-color: rgba(92, 151, 94, 0.8);
+            background-color: #2c6e49eb;
             color: #fff;
             text-align: center;
-            padding: 10px 0;
+            padding: 5px;
+            margin: 0px;
             width: 100%;
-            position: relative;
-            z-index: 1;
-            transition: bottom 0.3s ease-in-out;
+            height: 7%;
         }
-
-        .footer.fixed {
-            bottom: -100px; /* Altura del footer cuando se desplaza hacia abajo */
+        
+        header {
+            width: 90%;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
         }
     </style>
 </head>
@@ -133,27 +66,23 @@
     <div id="map"></div>
 
     <!-- Encabezado -->
-    <div class="navbar" id="header">
+    <header id="header">
         @include('layouts.header')
-    </div>
+    </header>
 
     <!-- Contenido principal -->
     <div class="content">
-        <div class="section">
+        <div class="container">
             @include('layouts.dashboard')
         </div>
-
-      {{--   <div class="section">
-            {{-- @include('layouts.packages') --}}
-      {{--   </div> --}} 
     </div>
 
     <!-- Pie de página -->
-    <div class="footer" id="footer">
-        <footer>
-            <p>&copy; 2024 AgroDrive. Todos los derechos reservados. Prohibida la reproducción total o parcial sin autorización.</p>
-        </footer>
-    </div>
+    <footer class="bg-light py-3 text-center ml-5 mr-5 rounded-5">
+        <div class="container">
+            <p class="font-weight-bold">&copy; 2024 <a href="/admin/login">AgroDrive</a>. Todos los derechos reservados. Prohibida la reproducción total o parcial sin autorización.</p>
+        </div>
+    </footer>
 
     <!-- Scripts JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -185,27 +114,6 @@
         } else {
             alert('Error: Tu navegador no soporta geolocalización.');
         }
-
-        // Manejar el desplazamiento del encabezado y el pie de página
-        let lastScrollTop = 0;
-        const navbar = document.getElementById('header');
-        const footer = document.getElementById('footer');
-
-        window.addEventListener('scroll', function() {
-            let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-            if (scrollTop > lastScrollTop) {
-                // Desplazamiento hacia abajo
-                navbar.classList.add('fixed');
-                footer.classList.add('fixed');
-            } else {
-                // Desplazamiento hacia arriba
-                navbar.classList.remove('fixed');
-                footer.classList.remove('fixed');
-            }
-
-            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
-        });
     </script>
 </body>
 </html>
