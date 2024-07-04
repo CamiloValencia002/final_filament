@@ -44,14 +44,14 @@
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-400">Teléfono</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-white">
-                            <a href="tel:{{ $customer->phone }}" class="text-blue-400 hover:text-blue-300">
-                                {{ $customer->phone }}
+                            <a href="tel:{{ $customer->telephone }}" class="text-blue-400 hover:text-blue-300">
+                                {{ $customer->telephone }}
                             </a>
                         </td>
                     </tr>
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-400">Dirección</td>
-                        <td class="px-6 py-4 whitespace-normal text-sm text-white">{{ $customer->address }}</td>
+                        <td class="px-6 py-4 whitespace-normal text-sm text-white">{{ $customer->adress }}</td>
                     </tr>
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-400">Correo</td>
