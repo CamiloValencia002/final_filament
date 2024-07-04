@@ -22,7 +22,7 @@ class DriverWidget extends BaseWidget
         $driverCount = Rating::where('id_driver', $driverId)->count();
         $total = Package::where('id_driver', $driverId)->sum('price');
 
-        $formattedTotal = number_format($total, 3, '.', ',');
+        $formattedTotal = number_format($total, 2, '.', ',');
 
         $vehicles = Vehicle::where('id_driver', $driverId)->count();
 
