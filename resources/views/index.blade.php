@@ -193,31 +193,33 @@
     </div>
   </div>
 </section>
-    <section id="company" class="content-box my-5">
-      <h2 class="text-center font-weight-bold mb-4">Compañía</h2>
-      <div class="row justify-content-center">
-        <div class="col-md-2 text-center mb-4">
-          <img src="{{ asset('img/fotoperfilcompany.png') }}" class="rounded-circle mb-3" alt="Edward Millán" width="100" height="100">
-          <h4 class="font-weight-bold">Edward Millán</h4>
-        </div>
-        <div class="col-md-2 text-center mb-4">
-          <img src="{{ asset('img/fotoperfilcompany.png') }}" class="rounded-circle mb-3" alt="Camilo Vargas" width="100" height="100">
-          <h4 class="font-weight-bold">Camilo Vargas</h4>
-        </div>
-        <div class="col-md-2 text-center mb-4">
-          <img src="{{ asset('img/fotoperfilcompany.png') }}" class="rounded-circle mb-3" alt="Alejandro Rojas" width="100" height="100">
-          <h4 class="font-weight-bold">Alejandro Rojas</h4>
-        </div>
-        <div class="col-md-2 text-center mb-4">
-          <img src="{{ asset('img/fotoperfilcompany.png') }}" class="rounded-circle mb-3" alt="Juan Camilo Valencia" width="100" height="100">
-          <h4 class="font-weight-bold">Juan Camilo Valencia</h4>
-        </div>
-        <div class="col-md-2 text-center mb-4">
-          <img src="{{ asset('img/fotoperfilcompany.png') }}" class="rounded-circle mb-3" alt="Alejandro Martinez" width="100" height="100">
-          <h4 class="font-weight-bold">Alejandro Martinez</h4>
-        </div>
-      </div>
-    </section>
+
+<section id="company" class="content-box my-5">
+  <h2 class="text-center font-weight-bold mb-5">Compañía</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-2 text-center mb-4">
+      <img src="{{ asset('img/edward.jfif') }}" class="rounded-circle mb-3 img-fluid shadow" alt="Edward Millán" style="width: 150px; height: 150px; object-fit: cover;">
+      <h4 class="font-weight-bold">Edward Millán</h4>
+    </div>
+    <div class="col-md-2 text-center mb-4">
+      <img src="{{ asset('img/vargas.jfif') }}" class="rounded-circle mb-3 img-fluid shadow" alt="Camilo Vargas" style="width: 150px; height: 150px; object-fit: cover;">
+      <h4 class="font-weight-bold">Camilo Vargas</h4>
+    </div>
+    <div class="col-md-2 text-center mb-4">
+      <img src="{{ asset('img/rojas.jfif') }}" class="rounded-circle mb-3 img-fluid shadow" alt="Alejandro Rojas" style="width: 150px; height: 150px; object-fit: cover;">
+      <h4 class="font-weight-bold">Alejandro Rojas</h4>
+    </div>
+    <div class="col-md-2 text-center mb-4">
+      <img src="{{ asset('img/valencia.jfif') }}" class="rounded-circle mb-3 img-fluid shadow" alt="Juan Camilo Valencia" style="width: 150px; height: 150px; object-fit: cover;">
+      <h4 class="font-weight-bold">Juan Camilo Valencia</h4>
+    </div>
+    <div class="col-md-2 text-center mb-4">
+      <img src="{{ asset('img/martinez.jfif') }}" class="rounded-circle mb-3 img-fluid shadow" alt="Alejandro Martinez" style="width: 150px; height: 150px; object-fit: cover;">
+      <h4 class="font-weight-bold">Alejandro Martinez</h4>
+    </div>
+  </div>
+</section>
+
   </main>
   <footer class="bg-light py-3 text-center ml-5 mr-5 rounded-5">
     <div class="container">
