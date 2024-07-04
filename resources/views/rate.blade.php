@@ -118,19 +118,22 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
                         <li><a class="dropdown-item" href="#"><img src="{{ asset('img/user-default.png') }}"
                                     alt="User Image" class="rounded-circle" width="30"> Perfil</a></li>
-                        <li><a class="dropdown-item" href="#">
-                                @php
-                                $ratings = Auth::user()->ratings;
-                                @endphp
-                                @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <= $ratings)
-                                        <i class="bi bi-star-fill text-warning"></i>
-                                    @else
-                                        <i class="bi bi-star text-warning"></i>
-                                    @endif
-                                @endfor
-                                {{ $ratings }}
-                            </a></li>
+                                    <li><a class="dropdown-item" href="#">
+                                      @php
+                                      $user = Auth::user();
+                                      $averageRating = \App\Models\Rating::where('id_customer', $user->id)
+                                          ->avg('rating_driver');
+                                      $roundedRating = round($averageRating, 1);
+                                      @endphp
+                                      @for ($i = 1; $i <= 5; $i++)
+                                          @if ($i <= $roundedRating)
+                                              <i class="bi bi-star-fill text-warning"></i>
+                                          @else
+                                              <i class="bi bi-star text-warning"></i>
+                                          @endif
+                                      @endfor
+                                      {{ $roundedRating }}
+                                  </a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}">

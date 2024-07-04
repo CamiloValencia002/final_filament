@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class RatePackage extends Component
 {
     public $packageId;
-    public $rating;
+    public $rating = 0;
     public $comment;
 
     protected $rules = [
@@ -20,6 +20,11 @@ class RatePackage extends Component
     public function mount($packageId)
     {
         $this->packageId = $packageId;
+    }
+
+    public function setRating($value)
+    {
+        $this->rating = $value;
     }
 
     public function submitRating()
@@ -35,7 +40,7 @@ class RatePackage extends Component
                 'comment_customer' => $this->comment,
             ]
         );
-        
+
         $rating->rating_customer = $this->rating;
         $rating->save();
 

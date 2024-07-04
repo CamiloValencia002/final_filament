@@ -8,14 +8,41 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   @livewireStyles
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .container {
+      max-width: 1200px;
+    }
+    .card {
+      border: none;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+    .table th {
+      background-color: #f1f3f5;
+      font-weight: 600;
+    }
+    .table td, .table th {
+      vertical-align: middle;
+    }
+    .btn-primary {
+      background-color: #007bff;
+      border-color: #007bff;
+    }
+    .btn-primary:hover {
+      background-color: #0056b3;
+      border-color: #0056b3;
+    }
+  </style>
 </head>
 <body>
   <div class="container mt-5">
-    <div class="bg-white p-4 rounded-lg shadow-lg max-w-md mx-auto">
-      <h1 class="h4 font-weight-bold text-center mb-4">Lista de Paquetes</h1>
+    <div class="card p-4 rounded-lg">
+      <h1 class="h3 font-weight-bold text-center mb-4">Lista de Paquetes</h1>
       <div class="table-responsive">
         @if($packages->count() > 0)
-          <table class="table table-bordered">
+          <table class="table table-hover">
             <thead>
               <tr>
                 <th>Estado</th>
@@ -34,34 +61,48 @@
             </thead>
             <tbody>
               @foreach($packages as $package)
-                <tr>
-                  <td>{{ $package->state }}</td>
-                  <td>{{ $package->id }}</td>
-                  <td>{{ $package->carge_type }}</td>
-                  <td>{{ $package->description }}</td>
-                  <td>{{ $package->syze }}</td>
-                  <td>{{ $package->weight }}</td>
-                  <td>{{ $package->point_initial }}</td>
-                  <td>{{ $package->point_finally }}</td>
-                  <td>{{ $package->price }}</td>
-                  <td>{{ $package->comment }}</td>
-                  <td>{{ $package->created_at }}</td>
-                  <td>
-                    @php
-                      $rating = \App\Models\Rating::where('id_package', $package->id)
-                                                  ->where('id_customer', auth()->id())
-                                                  ->first();
-                    @endphp
-                  
-                    @if($package->state == 'FINALIZADO' && (!$rating || $rating->rating_customer === null))
-                      <a href="{{ route('rate', $package->id) }}" class="btn btn-primary btn-sm">
-                        Calificar
-                      </a>
-                    @elseif($rating && $rating->rating_customer !== null)
-                      <span class="text-success">Calificado</span>
-                    @endif
-                  </td>
-                </tr>
+              <tr>
+                <td>
+                  <span class="badge bg-{{ $package->state == 'FINALIZADO' ? 'success' : ($package->state == 'EN PROCESO' ? 'warning' : 'primary') }}">
+                    {{ $package->state }}
+                  </span>
+                </td>
+                <td>{{ $package->id }}</td>
+                <td>{{ $package->carge_type }}</td>
+                <td>{{ Str::limit($package->description, 30) }}</td>
+                <td>{{ $package->syze }}</td>
+                <td>{{ $package->weight }}</td>
+                <td>{{ Str::limit($package->point_initial, 20) }}</td>
+                <td>{{ Str::limit($package->point_finally, 20) }}</td>
+                <td>{{ $package->price }}</td>
+                <td>{{ Str::limit($package->comment, 30) }}</td>
+                <td>{{ $package->created_at->format('d/m/Y') }}</td>
+                <td>
+                  @php
+                    $rating = \App\Models\Rating::where('id_package', $package->id)
+                                                ->where('id_customer', auth()->id())
+                                                ->first();
+                  @endphp
+                
+                  @if($package->state == 'FINALIZADO' && (!$rating || $rating->rating_customer === null))
+                    <a href="{{ route('rate', $package->id) }}" class="btn btn-primary btn-sm">
+                      <i class="bi bi-star-fill me-1"></i> Calificar
+                    </a>
+                  @elseif($package->state == 'EN PROCESO')
+                    <span class="btn btn-danger btn-sm disabled">
+                      <i class="bi bi-hourglass-split me-1"></i> En Proceso
+                    </span>
+                  @elseif($rating && $rating->rating_customer !== null)
+                    <span class="btn btn-success btn-sm disabled">
+                      <i class="bi bi-check-circle-fill me-1"></i> Calificado
+                    </span>
+                  @else
+                    <span class="btn btn-secondary btn-sm disabled">
+                      <i class="bi bi-clock-history me-1"></i> Pendiente
+                    </span>
+                  @endif
+                </td>
+              </tr>
               @endforeach
             </tbody>
           </table>
